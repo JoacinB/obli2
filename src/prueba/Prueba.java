@@ -1,7 +1,7 @@
-package obligatorio2;
+package prueba;
 
 
-public class Obligatorio2 {
+public class Prueba {
 
     public static void main(String[] args) {
         // Archivos para poder hacer el setup inicial del obligatorio 2 e incluir git
