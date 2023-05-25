@@ -1,9 +1,12 @@
 
 package Dominio;
 
+import static Interfaz.VentanaMayorista.producto;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Observable;
 
-public class Sistema {
+public class Sistema extends Observable {
      private ArrayList<Producto> listaProducto;
      private ArrayList<DueñoPuesto> listaDueños;
      private ArrayList<Puesto> listaPuestos;
@@ -19,11 +22,15 @@ public class Sistema {
      
      //get y set
     public ArrayList<Producto> getListaProducto() {
+        Collections.sort(listaProducto);
         return listaProducto;
     }
 
     public void setListaProducto(ArrayList<Producto> listaProducto) {
+        Collections.sort(this.listaProducto);
         this.listaProducto = listaProducto;
+        setChanged();
+        notifyObservers();
     }
     
     public ArrayList<DueñoPuesto> getListaDueños() {
@@ -53,6 +60,8 @@ public class Sistema {
     //Métodos
     public void agregarProducto(Producto p){
         this.listaProducto.add(p);
+        setChanged();
+        notifyObservers();
     }
     
     public void agregarDueño(DueñoPuesto d){

@@ -18,7 +18,7 @@ public class VentanaProducto extends javax.swing.JFrame {
     public VentanaProducto(Sistema sistema) {
         initComponents();
         modelo = sistema;
-        estiloFileChooser();
+//        estiloFileChooser();
     }
     
     public void estiloFileChooser(){
@@ -116,7 +116,7 @@ public class VentanaProducto extends javax.swing.JFrame {
         getContentPane().add(btnAlta);
         btnAlta.setBounds(180, 270, 72, 22);
 
-        pack();
+        setBounds(0, 0, 1017, 406);
     }// </editor-fold>//GEN-END:initComponents
 
     private void TextNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextNombreActionPerformed
@@ -124,31 +124,33 @@ public class VentanaProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_TextNombreActionPerformed
 
     private void FileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileChooserActionPerformed
+        String archivo = "";
         JFileChooser file = new JFileChooser();
-        file.setLocale(new Locale("es"));
+        estiloFileChooser();
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("jpg","jpg");
+        file.setFileFilter(filtrado);
         
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG,PNG","jpg","png");
-        file.addChoosableFileFilter(filtrado);
-        
-        
-        int cuadro = file.showOpenDialog(this);
+        int cuadro = file.showOpenDialog(null);
         if(cuadro == JFileChooser.APPROVE_OPTION){
             //Se selecciona un archivo
-            File archivo = file.getSelectedFile();
-            ImageIcon imagen = new ImageIcon(archivo.getAbsolutePath());
-            Image imag = imagen.getImage();
-            jLabelimagen.setIcon(imagen);
+            archivo = file.getSelectedFile().getPath();
+            Image imag = new ImageIcon(archivo).getImage();
+            ImageIcon imagen;
+            imagen = new ImageIcon(imag.getScaledInstance(lblImagen.getWidth(),lblImagen.getHeight(),Image.SCALE_SMOOTH));
+            lblImagen.setIcon(imagen);
         }
         else{
             if(cuadro == JFileChooser.CANCEL_OPTION){
                 //Se cancela un archivo
+                lblImagen.setIcon(null);
+                lblImagen.setText("Sin imagen");
             }
         }
-        
     }//GEN-LAST:event_FileChooserActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
 
+        lblImagen.setIcon(null);
         lblImagen.setText("");
         TextNombre.setText("");
         TextDescripcion.setText("");

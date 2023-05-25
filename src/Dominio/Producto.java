@@ -2,7 +2,7 @@
 package Dominio;
 
 
-public class Producto {
+public class Producto implements Comparable<Producto> {
 
         //Atributos
         private String nombre;
@@ -12,11 +12,17 @@ public class Producto {
         
         //Constructor
         public Producto(){
-            this.setNombre(tipo);
+            this.setNombre("sin nombre");
+            this.setDescripcion("sin descripción");
+            this.setTipo("sin tipo");
+            this.setFormaVenta("sin forma venta");
         }
         
         public Producto(String unNom,String unaDes,String unTipo,String unaVen){
-            
+            this.setNombre(unNom);
+            this.setDescripcion(unaDes);
+            this.setTipo(unTipo);
+            this.setFormaVenta(unaVen);
         }
         
         //get y set
@@ -60,5 +66,10 @@ public class Producto {
         public String toString(){
             return this.getNombre();
         }
+
+    @Override
+    public int compareTo(Producto o) {
+        return this.nombre.compareToIgnoreCase(o.getNombre());
+    }
     
 }

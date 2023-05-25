@@ -3,18 +3,22 @@ package Interfaz;
 
 import Dominio.*;
 import Dominio.Sistema;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JOptionPane;
 
-public class VentanaMayorista extends javax.swing.JFrame {
+public class VentanaMayorista extends javax.swing.JFrame implements Observer{
     
     public static Producto producto;
     
     public VentanaMayorista(Sistema sistema) {
         initComponents();
         modelo = sistema;
+        modelo.addObserver(this);
+        cargarProducto();
+        update(null,null);
     }
-
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -30,7 +34,7 @@ public class VentanaMayorista extends javax.swing.JFrame {
         lstProducto = new javax.swing.JList();
         btnRegistrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblRut.setText("Rut: ");
 
@@ -129,7 +133,11 @@ public class VentanaMayorista extends javax.swing.JFrame {
         txtDireccion.setText("");
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
+    
+    private void cargarProducto(){
+        lstProducto.setListData(modelo.getListaProducto().toArray());
+    }
+    
     private void lstProductoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstProductoValueChanged
         producto = (Producto)lstProducto.getSelectedValue();
     }//GEN-LAST:event_lstProductoValueChanged
@@ -182,5 +190,11 @@ public class VentanaMayorista extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtRut;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        lstProducto.setListData(modelo.getListaProducto().toArray());
+//        .setText(modelo.getListaProducto());
+    }
 
 }
