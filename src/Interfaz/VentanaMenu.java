@@ -20,11 +20,21 @@ public class VentanaMenu extends javax.swing.JFrame {
         itemPuesto = new javax.swing.JMenuItem();
         itemMayorista = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
+<<<<<<< HEAD
         ItemCompra = new javax.swing.JMenuItem();
         ItemVenta = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
+=======
+        cutMenuItem = new javax.swing.JMenuItem();
+        copyMenuItem = new javax.swing.JMenuItem();
+        pasteMenuItem = new javax.swing.JMenuItem();
+        deleteMenuItem = new javax.swing.JMenuItem();
+        menConsultar = new javax.swing.JMenu();
+        itemConProductos = new javax.swing.JMenuItem();
+        itemConDuenos = new javax.swing.JMenuItem();
+>>>>>>> 60daeab8b0abf9ef79dad891e5fe12530b4d1e56
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,18 +102,23 @@ public class VentanaMenu extends javax.swing.JFrame {
 
         menuBar.add(editMenu);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Consultas");
+        menConsultar.setMnemonic('h');
+        menConsultar.setText("Consultas");
 
-        contentsMenuItem.setMnemonic('c');
-        contentsMenuItem.setText("Contents");
-        helpMenu.add(contentsMenuItem);
+        itemConProductos.setMnemonic('c');
+        itemConProductos.setLabel("Producto");
+        itemConProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConProductosActionPerformed(evt);
+            }
+        });
+        menConsultar.add(itemConProductos);
 
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
+        itemConDuenos.setMnemonic('a');
+        itemConDuenos.setLabel("Dueños");
+        menConsultar.add(itemConDuenos);
 
-        menuBar.add(helpMenu);
+        menuBar.add(menConsultar);
 
         setJMenuBar(menuBar);
 
@@ -141,6 +156,7 @@ public class VentanaMenu extends javax.swing.JFrame {
         ventanaP.setVisible(true);
     }//GEN-LAST:event_itemPuestoActionPerformed
 
+<<<<<<< HEAD
     private void ItemCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemCompraActionPerformed
         VentanaCompra ventanaC = new VentanaCompra(modelo);
         ventanaC.setVisible(true);
@@ -150,6 +166,12 @@ public class VentanaMenu extends javax.swing.JFrame {
         VentanaVenta ventanaV = new VentanaVenta(modelo);
         ventanaV.setVisible(true);
     }//GEN-LAST:event_ItemVentaActionPerformed
+=======
+    private void itemConProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConProductosActionPerformed
+        VentanaConsultaProducto ventanaConProd = new VentanaConsultaProducto(modelo);
+        ventanaConProd.setVisible(true);
+    }//GEN-LAST:event_itemConProductosActionPerformed
+>>>>>>> 60daeab8b0abf9ef79dad891e5fe12530b4d1e56
     
     
 
@@ -188,16 +210,24 @@ public class VentanaMenu extends javax.swing.JFrame {
     
     private Sistema modelo;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
     private javax.swing.JMenuItem ItemCompra;
     private javax.swing.JMenuItem ItemVenta;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentsMenuItem;
+=======
+    private javax.swing.JMenuItem copyMenuItem;
+    private javax.swing.JMenuItem cutMenuItem;
+    private javax.swing.JMenuItem deleteMenuItem;
+>>>>>>> 60daeab8b0abf9ef79dad891e5fe12530b4d1e56
     private javax.swing.JMenu editMenu;
-    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem itemConDuenos;
+    private javax.swing.JMenuItem itemConProductos;
     private javax.swing.JMenuItem itemDueñoPuesto;
     private javax.swing.JMenuItem itemMayorista;
     private javax.swing.JMenuItem itemProducto;
     private javax.swing.JMenuItem itemPuesto;
+    private javax.swing.JMenu menConsultar;
     private javax.swing.JMenu menRegistrar;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables

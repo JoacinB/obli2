@@ -185,12 +185,22 @@ public class VentanaProducto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Nombre repetido", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else{
-                Producto p = new Producto(TextNombre.getText(),TextDescripcion.getText(),ComboBoxTipo.getSelectedItem().toString(),ComboBoxVenta.getSelectedItem().toString(),archivo);
+                Producto p = new Producto(TextNombre.getText(),TextDescripcion.getText(),ComboBoxTipo.getSelectedItem().toString(),ComboBoxVenta.getSelectedItem().toString());
+                Image ImagenSeleccionada = obtenerImagen();
+                p.setImage(ImagenSeleccionada);
                 modelo.agregarProducto(p);
             }
         }
     }//GEN-LAST:event_btnAltaActionPerformed
 
+    public Image obtenerImagen() {
+        ImageIcon icon = (ImageIcon) lblImagen.getIcon();
+        if (icon != null) {
+            return icon.getImage();
+        } else {
+            return null;
+        }
+    }
     
     
 //    /**
