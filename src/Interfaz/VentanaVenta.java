@@ -43,7 +43,7 @@ public class VentanaVenta extends javax.swing.JFrame {
                
                 for(Producto p: modelo.productoPuesto(puesto)){
                     //Si hay stock de este producto entonces agregalo al boton
-                    Image imag = new ImageIcon(p.getImag()).getImage();
+                    Image imag = new ImageIcon(p.getImage()).getImage();
                     ImageIcon imagen;
                     imagen = new ImageIcon(imag.getScaledInstance(60,60,Image.SCALE_SMOOTH));
                     //Se agrega la imagen al boton
