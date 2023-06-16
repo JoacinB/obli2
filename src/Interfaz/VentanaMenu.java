@@ -22,12 +22,10 @@ public class VentanaMenu extends javax.swing.JFrame {
         editMenu = new javax.swing.JMenu();
         ItemCompra = new javax.swing.JMenuItem();
         ItemVenta = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
         menConsultar = new javax.swing.JMenu();
         itemConProductos = new javax.swing.JMenuItem();
