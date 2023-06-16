@@ -1,6 +1,8 @@
 
 package Dominio;
 
+import java.awt.Image;
+
 
 public class Producto implements Comparable<Producto> {
 
@@ -9,6 +11,7 @@ public class Producto implements Comparable<Producto> {
         private String descripcion;
         private String tipo;
         private String formaVenta;
+        private Image image;
         
         //Constructor
         public Producto(){
@@ -56,6 +59,14 @@ public class Producto implements Comparable<Producto> {
         
         public void setFormaVenta(String unVent){
             this.formaVenta = unVent;
+        }
+        
+        public Image getImage() {
+            return image;
+        }
+        
+        public void setImage(Image image) {
+            this.image = image;
         }
         
         public boolean equals(Object o){

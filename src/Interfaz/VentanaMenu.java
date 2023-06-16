@@ -24,9 +24,9 @@ public class VentanaMenu extends javax.swing.JFrame {
         copyMenuItem = new javax.swing.JMenuItem();
         pasteMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentsMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        menConsultar = new javax.swing.JMenu();
+        itemConProductos = new javax.swing.JMenuItem();
+        itemConDuenos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,18 +92,23 @@ public class VentanaMenu extends javax.swing.JFrame {
 
         menuBar.add(editMenu);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Consultas");
+        menConsultar.setMnemonic('h');
+        menConsultar.setText("Consultas");
 
-        contentsMenuItem.setMnemonic('c');
-        contentsMenuItem.setText("Contents");
-        helpMenu.add(contentsMenuItem);
+        itemConProductos.setMnemonic('c');
+        itemConProductos.setLabel("Producto");
+        itemConProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConProductosActionPerformed(evt);
+            }
+        });
+        menConsultar.add(itemConProductos);
 
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
+        itemConDuenos.setMnemonic('a');
+        itemConDuenos.setLabel("Dueños");
+        menConsultar.add(itemConDuenos);
 
-        menuBar.add(helpMenu);
+        menuBar.add(menConsultar);
 
         setJMenuBar(menuBar);
 
@@ -140,6 +145,11 @@ public class VentanaMenu extends javax.swing.JFrame {
         VentanaPuestos ventanaP = new VentanaPuestos(modelo);
         ventanaP.setVisible(true);
     }//GEN-LAST:event_itemPuestoActionPerformed
+
+    private void itemConProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConProductosActionPerformed
+        VentanaConsultaProducto ventanaConProd = new VentanaConsultaProducto(modelo);
+        ventanaConProd.setVisible(true);
+    }//GEN-LAST:event_itemConProductosActionPerformed
     
     
 
@@ -178,17 +188,17 @@ public class VentanaMenu extends javax.swing.JFrame {
     
     private Sistema modelo;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu editMenu;
-    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem itemConDuenos;
+    private javax.swing.JMenuItem itemConProductos;
     private javax.swing.JMenuItem itemDueñoPuesto;
     private javax.swing.JMenuItem itemMayorista;
     private javax.swing.JMenuItem itemProducto;
     private javax.swing.JMenuItem itemPuesto;
+    private javax.swing.JMenu menConsultar;
     private javax.swing.JMenu menRegistrar;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem pasteMenuItem;
