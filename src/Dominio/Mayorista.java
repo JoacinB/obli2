@@ -1,25 +1,31 @@
 
 package Dominio;
 
-public class Mayorista {
+import java.util.ArrayList;
+import java.util.Collections;
+import javax.swing.DefaultListModel;
+
+public class Mayorista{
+    //Atributo
     private String rut;
     private String nombre;
     private String direccion;
-    private Producto p;
+    private ArrayList<Producto> productos;
     
+    //Constructor
     public Mayorista(){
         this.setNombre("Sin nombre");
         this.setRut("Sin rut");
         this.setDire("Sin dirección");
     }
     
-    public Mayorista(String unR,String nom,String dire,Producto p){
+    public Mayorista(String unR,String nom,String dire,ArrayList<Producto> p){
         this.setNombre(nom);
         this.setRut(unR);
         this.setDire(dire);
         this.setProducto(p);
     }
-    
+
     //get y set
     public String getNombre(){
         return this.nombre;
@@ -45,12 +51,23 @@ public class Mayorista {
         this.direccion = unDire;
     }
     
-    public Producto getProd(){
-        return p;
+    public ArrayList<Producto> getProducto() {
+        return productos;
+    }
+
+    public void setProducto(ArrayList<Producto> Prod) {
+        this.productos = Prod;
     }
     
-    public Producto setProducto(Producto prod){
-        return this.p = prod;
+    //metodos
+    public void agregarProducto(Producto p){
+        this.productos.add(p);
+
+    }
+    
+    @Override
+    public String toString(){
+        return this.getNombre() + "-" + this.getRut() + "-" + this.getDire() + "-" + this.getProducto();
     }
     
 }

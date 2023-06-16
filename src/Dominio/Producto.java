@@ -9,6 +9,7 @@ public class Producto implements Comparable<Producto> {
         private String descripcion;
         private String tipo;
         private String formaVenta;
+        private String imagen;
         
         //Constructor
         public Producto(){
@@ -16,13 +17,15 @@ public class Producto implements Comparable<Producto> {
             this.setDescripcion("sin descripción");
             this.setTipo("sin tipo");
             this.setFormaVenta("sin forma venta");
+            this.setImag("Sin imagen");
         }
         
-        public Producto(String unNom,String unaDes,String unTipo,String unaVen){
+        public Producto(String unNom,String unaDes,String unTipo,String unaVen,String img){
             this.setNombre(unNom);
             this.setDescripcion(unaDes);
             this.setTipo(unTipo);
             this.setFormaVenta(unaVen);
+            this.setImag(img);
         }
         
         //get y set
@@ -58,6 +61,14 @@ public class Producto implements Comparable<Producto> {
             this.formaVenta = unVent;
         }
         
+        public String getImag(){
+            return this.imagen;
+        }
+        
+        public void setImag(String imag){
+            this.imagen = imag;
+        }
+        
         public boolean equals(Object o){
             return this.getNombre().equalsIgnoreCase(((Producto)o).getNombre());
         }
@@ -66,10 +77,11 @@ public class Producto implements Comparable<Producto> {
         public String toString(){
             return this.getNombre();
         }
-
-    @Override
-    public int compareTo(Producto o) {
-        return this.nombre.compareToIgnoreCase(o.getNombre());
-    }
+        
+        //Nombre distinto
+        @Override
+        public int compareTo(Producto o) {
+            return this.nombre.compareToIgnoreCase(o.getNombre());
+        }
     
 }

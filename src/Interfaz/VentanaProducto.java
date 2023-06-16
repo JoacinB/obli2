@@ -13,21 +13,30 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class VentanaProducto extends javax.swing.JFrame {
-
+    
+    String archivo = "";
+    public static final int CANCEL_OPTION = 1;
+    public static final int  APPROVE_OPTION = 0; 
 
     public VentanaProducto(Sistema sistema) {
+         cambiarEsp();
         initComponents();
         modelo = sistema;
-//        estiloFileChooser();
+        
+        //Archivo imagenes por defecto
+        String currentDir = System.getProperty("user.dir");
+        String defaultFolder = currentDir + "/ImagenesOblig";
+        FileChooser.setCurrentDirectory(new File(defaultFolder));
+        
+//        File defaultFolder = new File("C:\\OBLI2\\ImagenesOblig");
+//        FileChooser.setCurrentDirectory(defaultFolder);
+        
+        //Archivos solo de tipo jpg y png
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("jpg, png","jpg","png");
+        FileChooser.setFileFilter(filtrado);
+
     }
     
-    public void estiloFileChooser(){
-        UIManager.put("FileChooser.openButtonText","Abrir");
-        UIManager.put("FileChooser.cancelButtonText","Cancelar");
-        UIManager.put("FileChooser.fileNameLabelText","Archivo");
-        UIManager.put("FileChooser.filesOfTypeLabelText","Tipo");
-        UIManager.put("FileChooser.lookInLabelText","Mirar en");
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -56,7 +65,7 @@ public class VentanaProducto extends javax.swing.JFrame {
 
         jLabelDescri.setText("Descripción:");
         getContentPane().add(jLabelDescri);
-        jLabelDescri.setBounds(20, 80, 70, 16);
+        jLabelDescri.setBounds(20, 80, 80, 16);
 
         jLabelTipo.setText("Tipo:");
         getContentPane().add(jLabelTipo);
@@ -64,7 +73,7 @@ public class VentanaProducto extends javax.swing.JFrame {
 
         jLabelVentapor.setText("Venta por:");
         getContentPane().add(jLabelVentapor);
-        jLabelVentapor.setBounds(20, 160, 60, 16);
+        jLabelVentapor.setBounds(20, 160, 70, 16);
 
         TextNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,29 +132,40 @@ public class VentanaProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextNombreActionPerformed
 
+    
+    //Cambiar JFileChooser a español 
+    public void cambiarEsp(){
+        UIManager.put("FileChooser.openButtonText","Abrir");
+        UIManager.put("FileChooser.openDialogTitleText","Abrir");
+        UIManager.put("FileChooser.cancelButtonText","Cancelar");
+        UIManager.put("FileChooser.fileNameLabelText","Archivo");
+        UIManager.put("FileChooser.filesOfTypeLabelText","Tipo");
+        UIManager.put("FileChooser.lookInLabelText","Mirar en");
+        UIManager.put("FileChooser.openButtonToolTipText","Abrir selección");
+        UIManager.put("FileChooser.cancelButtonToolTipText","Cancelar selección");
+    }
+    
+    
     private void FileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileChooserActionPerformed
-        String archivo = "";
-        JFileChooser file = new JFileChooser();
-        estiloFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("jpg","jpg");
-        file.setFileFilter(filtrado);
         
-        int cuadro = file.showOpenDialog(null);
-        if(cuadro == JFileChooser.APPROVE_OPTION){
+        if(JFileChooser.APPROVE_OPTION == 0){
             //Se selecciona un archivo
-            archivo = file.getSelectedFile().getPath();
+            archivo = FileChooser.getSelectedFile().getPath();
             Image imag = new ImageIcon(archivo).getImage();
             ImageIcon imagen;
             imagen = new ImageIcon(imag.getScaledInstance(lblImagen.getWidth(),lblImagen.getHeight(),Image.SCALE_SMOOTH));
+            //Se muestra la imagen
             lblImagen.setIcon(imagen);
         }
+        
         else{
-            if(cuadro == JFileChooser.CANCEL_OPTION){
+            if(JFileChooser.CANCEL_OPTION == 1){
                 //Se cancela un archivo
                 lblImagen.setIcon(null);
                 lblImagen.setText("Sin imagen");
             }
         }
+        
     }//GEN-LAST:event_FileChooserActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
@@ -165,13 +185,12 @@ public class VentanaProducto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"Nombre repetido", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else{
-                Producto p = new Producto(TextNombre.getText(),TextDescripcion.getText(),ComboBoxTipo.getSelectedItem().toString(),ComboBoxVenta.getSelectedItem().toString());
+                Producto p = new Producto(TextNombre.getText(),TextDescripcion.getText(),ComboBoxTipo.getSelectedItem().toString(),ComboBoxVenta.getSelectedItem().toString(),archivo);
                 modelo.agregarProducto(p);
             }
         }
     }//GEN-LAST:event_btnAltaActionPerformed
 
-    
     
     
 //    /**

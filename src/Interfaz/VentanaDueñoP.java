@@ -33,19 +33,31 @@ public class VentanaDueñoP extends javax.swing.JFrame {
 
         jLabelNombre.setText("Nombre: ");
         getContentPane().add(jLabelNombre);
-        jLabelNombre.setBounds(25, 49, 65, 16);
+        jLabelNombre.setBounds(30, 50, 65, 16);
 
         jLabelEdad.setText("Edad: ");
         getContentPane().add(jLabelEdad);
-        jLabelEdad.setBounds(25, 95, 66, 16);
+        jLabelEdad.setBounds(30, 90, 66, 16);
 
         jLabelExperiencia.setText("Experiencia: ");
         getContentPane().add(jLabelExperiencia);
-        jLabelExperiencia.setBounds(25, 141, 66, 16);
+        jLabelExperiencia.setBounds(30, 140, 80, 20);
         getContentPane().add(TextNombre);
         TextNombre.setBounds(131, 46, 104, 22);
+
+        TextEdad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TextEdadKeyTyped(evt);
+            }
+        });
         getContentPane().add(TextEdad);
         TextEdad.setBounds(131, 92, 104, 22);
+
+        TextExperiencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TextExperienciaKeyTyped(evt);
+            }
+        });
         getContentPane().add(TextExperiencia);
         TextExperiencia.setBounds(131, 138, 104, 22);
 
@@ -56,9 +68,9 @@ public class VentanaDueñoP extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnRegistrar);
-        btnRegistrar.setBounds(228, 199, 76, 22);
+        btnRegistrar.setBounds(228, 199, 100, 22);
 
-        pack();
+        setBounds(0, 0, 416, 308);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -78,6 +90,26 @@ public class VentanaDueñoP extends javax.swing.JFrame {
         TextEdad.setText("");
         TextExperiencia.setText("");
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void TextEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextEdadKeyTyped
+        char key = evt.getKeyChar();
+        
+        if(Character.isLetter(key)){
+            evt.consume();
+            
+            JOptionPane.showMessageDialog(rootPane, "Ingresar solo números");
+        }
+    }//GEN-LAST:event_TextEdadKeyTyped
+
+    private void TextExperienciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextExperienciaKeyTyped
+        char key = evt.getKeyChar();
+        
+        if(Character.isLetter(key)){
+            evt.consume();
+            
+            JOptionPane.showMessageDialog(rootPane, "Ingresar solo números");
+        }
+    }//GEN-LAST:event_TextExperienciaKeyTyped
 
     /**
      * @param args the command line arguments

@@ -13,6 +13,5 @@ public class Prueba {
         
         VentanaMenu ventMenu = new VentanaMenu(modelo);
         ventMenu.setVisible(true);
-        // ahora si jeje
     }
 }

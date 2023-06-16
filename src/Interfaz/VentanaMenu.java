@@ -20,10 +20,8 @@ public class VentanaMenu extends javax.swing.JFrame {
         itemPuesto = new javax.swing.JMenuItem();
         itemMayorista = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
+        ItemCompra = new javax.swing.JMenuItem();
+        ItemVenta = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -74,21 +72,23 @@ public class VentanaMenu extends javax.swing.JFrame {
         editMenu.setMnemonic('e');
         editMenu.setText("Movimiento");
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
-        editMenu.add(cutMenuItem);
+        ItemCompra.setMnemonic('t');
+        ItemCompra.setText("Registrar compra");
+        ItemCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ItemCompraActionPerformed(evt);
+            }
+        });
+        editMenu.add(ItemCompra);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        editMenu.add(copyMenuItem);
-
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
-
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
+        ItemVenta.setMnemonic('y');
+        ItemVenta.setText("Registrar Venta");
+        ItemVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ItemVentaActionPerformed(evt);
+            }
+        });
+        editMenu.add(ItemVenta);
 
         menuBar.add(editMenu);
 
@@ -140,6 +140,16 @@ public class VentanaMenu extends javax.swing.JFrame {
         VentanaPuestos ventanaP = new VentanaPuestos(modelo);
         ventanaP.setVisible(true);
     }//GEN-LAST:event_itemPuestoActionPerformed
+
+    private void ItemCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemCompraActionPerformed
+        VentanaCompra ventanaC = new VentanaCompra(modelo);
+        ventanaC.setVisible(true);
+    }//GEN-LAST:event_ItemCompraActionPerformed
+
+    private void ItemVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemVentaActionPerformed
+        VentanaVenta ventanaV = new VentanaVenta(modelo);
+        ventanaV.setVisible(true);
+    }//GEN-LAST:event_ItemVentaActionPerformed
     
     
 
@@ -178,11 +188,10 @@ public class VentanaMenu extends javax.swing.JFrame {
     
     private Sistema modelo;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ItemCompra;
+    private javax.swing.JMenuItem ItemVenta;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentsMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem itemDueñoPuesto;
@@ -191,7 +200,6 @@ public class VentanaMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemPuesto;
     private javax.swing.JMenu menRegistrar;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem pasteMenuItem;
     // End of variables declaration//GEN-END:variables
 
 }

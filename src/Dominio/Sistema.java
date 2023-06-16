@@ -1,9 +1,9 @@
 
 package Dominio;
 
-import static Interfaz.VentanaMayorista.producto;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Observable;
 
 public class Sistema extends Observable {
@@ -11,6 +11,8 @@ public class Sistema extends Observable {
      private ArrayList<DueñoPuesto> listaDueños;
      private ArrayList<Puesto> listaPuestos;
      private ArrayList<Mayorista> listaMayorista;
+     private ArrayList<CompraProducto> listaCompra;
+     private ArrayList<VentaProducto> listaVenta;
      
      //Constructor
      public Sistema(){
@@ -18,6 +20,8 @@ public class Sistema extends Observable {
          listaDueños = new ArrayList<>();
          listaPuestos = new ArrayList<>();
          listaMayorista = new ArrayList<>();
+         listaCompra = new ArrayList<>();
+         listaVenta = new ArrayList<>();
      }
      
      //get y set
@@ -47,6 +51,8 @@ public class Sistema extends Observable {
 
     public void setListaPuestos(ArrayList<Puesto> listaP) {
         this.listaPuestos = listaP;
+        setChanged();
+        notifyObservers();
     }
     
     public ArrayList<Mayorista> getListaMayorista() {
@@ -55,6 +61,24 @@ public class Sistema extends Observable {
 
     public void setListaMayorista(ArrayList<Mayorista> listaMayorista) {
         this.listaMayorista = listaMayorista;
+        setChanged();
+        notifyObservers();
+    }
+    
+    public ArrayList<CompraProducto> getListaCompra(){
+        return listaCompra;
+    }
+    
+    public void setListaCompra(ArrayList<CompraProducto> listaC){
+        this.listaCompra = listaC;
+    }
+    
+    public ArrayList<VentaProducto> getListaVenta(){
+        return listaVenta;
+    }
+    
+    public void setListaVenta(ArrayList<VentaProducto> listaV){
+        this.listaVenta = listaV;
     }
     
     //Métodos
@@ -74,6 +98,16 @@ public class Sistema extends Observable {
     
     public void agregarMayorista(Mayorista m){
         this.listaMayorista.add(m);
+        setChanged();
+        notifyObservers();
+    }
+    
+    public void agregarCompra(CompraProducto cp){
+        this.listaCompra.add(cp);
+    }
+    
+    public void agregarVenta(VentaProducto vp){
+        this.listaVenta.add(vp);
     }
     
     //nombre único
@@ -91,7 +125,48 @@ public class Sistema extends Observable {
         }
         return vacio;
     }
-     
+    
+    //Productos de mayorista
+    public ArrayList<Producto> productoDe(Mayorista m){
+        ArrayList<Producto> listaP = new ArrayList<Producto>();
+        Iterator<Producto> it = this.getListaProducto().iterator();
+        while(it.hasNext()){
+            Producto p = it.next();
+            if(m.equals(p)){
+                listaP.add(p);
+            }
+        }
+        return listaP;
+    }
+    
+    //Lista de productos que se compraron
+//    public ArrayList<String> productoComprados(CompraProducto p){
+//        ArrayList<String> listap = new ArrayList<String>();
+//        Iterator<Producto> it = this.getListaProducto().iterator();
+//        while(it.hasNext()){
+//            Producto prod = it.next();
+//            if(p.getProducto().equals(prod.getNombre())){
+//                listap.add(prod.getNombre());
+//            }
+//        }
+//        return listap;
+//    }
+    
+    //Productos comprados por el puesto
+    public ArrayList<Producto> productoPuesto(Puesto p){
+        ArrayList<Producto> listaProd = new ArrayList<Producto>();
+        Iterator<CompraProducto> it = this.getListaCompra().iterator();
+        while(it.hasNext()){
+            CompraProducto prod = it.next();
+            if(prod.getPuesto().equals(p)){
+                if(prod.getCant() >= 1){
+                    listaProd.add(prod.getProducto());
+                }
+            }
+        }
+        return listaProd;
+    }
+
 }
 
 

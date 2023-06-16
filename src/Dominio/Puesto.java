@@ -63,6 +63,6 @@ public class Puesto {
     
     @Override
     public String toString(){
-        return this.getId();
+        return this.getId() + "-" + this.getDueño() + "-" + this.getUbicacion();
     }
 }

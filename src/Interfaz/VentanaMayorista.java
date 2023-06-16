@@ -2,20 +2,29 @@
 package Interfaz;
 
 import Dominio.*;
-import Dominio.Sistema;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 
 public class VentanaMayorista extends javax.swing.JFrame implements Observer{
     
-    public static Producto producto;
+    ArrayList<Producto> p = new ArrayList<>();
+    DefaultListModel mod;
+
     
     public VentanaMayorista(Sistema sistema) {
         initComponents();
         modelo = sistema;
         modelo.addObserver(this);
+        mod = new DefaultListModel();
         cargarProducto();
+        lstProducto.setModel(mod);
+        lstProducto.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        mod.addElement(lstProducto);
         update(null,null);
     }
     
@@ -44,6 +53,7 @@ public class VentanaMayorista extends javax.swing.JFrame implements Observer{
 
         lblProducto.setText("Productos:");
 
+        lstProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lstProducto.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstProductoValueChanged(evt);
@@ -112,10 +122,11 @@ public class VentanaMayorista extends javax.swing.JFrame implements Observer{
                 .addGap(25, 25, 25))
         );
 
-        pack();
+        setBounds(0, 0, 539, 269);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+
         if(modelo.campoVacio(txtNombre.getText()) || modelo.campoVacio(txtRut.getText()) || modelo.campoVacio(txtDireccion.getText())){
             JOptionPane.showMessageDialog(this,"Campo obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -123,25 +134,34 @@ public class VentanaMayorista extends javax.swing.JFrame implements Observer{
             if(modelo.existeNombre(txtRut.getText())){
                 JOptionPane.showMessageDialog(this,"El rut debe ser único","Error", JOptionPane.ERROR_MESSAGE);
             }
-            else{
-                Mayorista m = new Mayorista(txtRut.getText(),txtNombre.getText(),txtDireccion.getText(),producto);
+            else{   
+                ArrayList<Producto> lista = (ArrayList<Producto>) lstProducto.getSelectedValuesList();
+                
+                for(int i = 0; i< lista.size();i++){
+                    mod.addElement(lista.get(i));
+                }
+
+                Mayorista m = new Mayorista(txtRut.getText(),txtNombre.getText(),txtDireccion.getText(),lista);
                 modelo.agregarMayorista(m);
+                JOptionPane.showMessageDialog(this,m);
             }
         }
         txtNombre.setText("");
         txtRut.setText("");
         txtDireccion.setText("");
-        
     }//GEN-LAST:event_btnRegistrarActionPerformed
     
+
     private void cargarProducto(){
         lstProducto.setListData(modelo.getListaProducto().toArray());
     }
     
     private void lstProductoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstProductoValueChanged
-        producto = (Producto)lstProducto.getSelectedValue();
+        
     }//GEN-LAST:event_lstProductoValueChanged
 
+    
+                
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -194,7 +214,6 @@ public class VentanaMayorista extends javax.swing.JFrame implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         lstProducto.setListData(modelo.getListaProducto().toArray());
-//        .setText(modelo.getListaProducto());
     }
 
 }

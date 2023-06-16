@@ -61,10 +61,16 @@ public class VentanaPuestos extends javax.swing.JFrame {
         txtDueño.setBounds(210, 80, 110, 22);
         getContentPane().add(txtUbi);
         txtUbi.setBounds(210, 120, 110, 22);
+
+        txtCantE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantEKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtCantE);
         txtCantE.setBounds(210, 160, 110, 22);
 
-        pack();
+        setBounds(0, 0, 416, 308);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -85,6 +91,16 @@ public class VentanaPuestos extends javax.swing.JFrame {
         txtUbi.setText("");
         txtCantE.setText("");
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtCantEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantEKeyTyped
+        char key = evt.getKeyChar();
+        
+        if(Character.isLetter(key)){
+            evt.consume();
+            
+            JOptionPane.showMessageDialog(rootPane, "Ingresar solo números");
+        }
+    }//GEN-LAST:event_txtCantEKeyTyped
 
     /**
      * @param args the command line arguments
