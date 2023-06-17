@@ -143,7 +143,6 @@ public class VentanaMayorista extends javax.swing.JFrame implements Observer{
 
                 Mayorista m = new Mayorista(txtRut.getText(),txtNombre.getText(),txtDireccion.getText(),lista);
                 modelo.agregarMayorista(m);
-                JOptionPane.showMessageDialog(this,m);
             }
         }
         txtNombre.setText("");

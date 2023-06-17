@@ -11,10 +11,8 @@ public class Producto implements Comparable<Producto> {
         private String descripcion;
         private String tipo;
         private String formaVenta;
-
         private Image image;
 
-        
         //Constructor
         public Producto(){
             this.setNombre("sin nombre");
