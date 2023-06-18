@@ -16,6 +16,7 @@ public class CompraProducto {
     }
     
     public CompraProducto(Puesto unp,Mayorista m,Producto unP,int precio,int cant){
+        this.setPuesto(unp);
         this.setProducto(unP);
         this.setMayorista(m);
         this.setPrecio(precio);
@@ -65,8 +66,9 @@ public class CompraProducto {
         this.cantidad = can;
     }
     
-//    public String toString(){
-//        return ;
-//    }
+    @Override
+    public String toString(){
+        return this.getPuesto() + "-" + this.getMayorista() + "-" + this.getProducto() + "-" + this.getPrecio() + "-" + this.getCant();
+    }
     
 }

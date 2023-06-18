@@ -67,7 +67,7 @@ public class Mayorista{
     
     @Override
     public String toString(){
-        return this.getNombre() + "-" + this.getRut() + "-" + this.getDire() + "-" + this.getProducto();
+        return this.getNombre() + "-" + this.getRut() + "-" + this.getDire();
     }
     
 }

@@ -11,23 +11,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class VentanaVenta extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaVenta
-     */
+    
+
     public VentanaVenta(Sistema sistema) {
         initComponents();
         modelo = sistema;
         cargarCombo();
         botones();
-        PanelBotones.setVisible(true);
     }
     
     public void cargarCombo(){
         for(Puesto obj : modelo.getListaPuesto()){
-            ComboPuesto.addItem(obj.toString());
+            ComboPuesto.addItem(obj);
         }
     }
     
@@ -35,30 +34,41 @@ public class VentanaVenta extends javax.swing.JFrame {
     public void botones(){
         JButton [][] matBotones = new JButton[12][3];
         PanelBotones.setLayout(new GridLayout(11,2));
-        Puesto puesto = (Puesto)ComboPuesto.getSelectedItem();
         
-        for(int i = 1;i<=11;i++){
-            for(int j=1 ;j<=2;j++){
+        Puesto puestoSelec = (Puesto)ComboPuesto.getSelectedItem();
+        
+        for(int i = 0;i<11;i++){
+           Image imagenProducto = prod().getImage();
+            for(int j=0 ;j<2;j++){
                 JButton nuevo = new JButton("");
-               
-                for(Producto p: modelo.productoPuesto(puesto)){
-                    //Si hay stock de este producto entonces agregalo al boton
-                    Image imag = new ImageIcon(p.getImage()).getImage();
-                    ImageIcon imagen;
-                    imagen = new ImageIcon(imag.getScaledInstance(60,60,Image.SCALE_SMOOTH));
-                    //Se agrega la imagen al boton
-                    nuevo.setIcon(imagen);
-                    JOptionPane.showMessageDialog(this,p);
-//                    nuevo.setText(p.toString());
-                    matBotones[i][j] = nuevo;
-                }
+
+                //Si hay s= prod().getImage();tock de este producto entonces agregalo al boton
+                imagenProducto = prod().getImage();
+                Image scaledImage = imagenProducto.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                ImageIcon imageIcon = new ImageIcon(scaledImage);
+                //Se agrega la imagen al boton
+                nuevo.setIcon(imageIcon);
+                matBotones[i][j] = nuevo;
+                PanelBotones.add(nuevo);
+
                 PanelBotones.setSize(453, 271);
-                
+
                 //nuevo.addActionListener(new ProcesoProducto());
-                PanelBotones.add(new JScrollPane(nuevo));
+                JScrollPane sp = new JScrollPane(PanelBotones,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        //        sp.add(PanelBotones);
+                sp.setVisible(true);
             }
         }
         
+    }
+    
+    public Producto prod(){
+        Producto pro = null;
+        Puesto puestoSelec = (Puesto)ComboPuesto.getSelectedItem();
+        for(Producto p : modelo.productoPuesto(puestoSelec)){
+            pro = p;
+        }
+        return pro;
     }
     
     private class ProcesoProducto implements ActionListener {
@@ -197,7 +207,7 @@ public class VentanaVenta extends javax.swing.JFrame {
     
     public Sistema modelo;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboPuesto;
+    private javax.swing.JComboBox<Puesto> ComboPuesto;
     private javax.swing.JPanel PanelBotones;
     private javax.swing.JButton btnRegistra;
     private javax.swing.JLabel lblPuesto;

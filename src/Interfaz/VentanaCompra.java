@@ -172,16 +172,15 @@ public class VentanaCompra extends javax.swing.JFrame implements Observer {
         else{
             if(listaPuesto.isSelectionEmpty() || listaMayorista.isSelectionEmpty() || listaProd.isSelectionEmpty()){
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un puesto, un mayorista y un producto", "Error", JOptionPane.ERROR_MESSAGE);
-                
             }
             else{
-            CompraProducto c = new CompraProducto(puesto,mayorista,producto,Integer.parseInt(txtPrecio.getText()),Integer.parseInt(txtCantidad.getText()));
-            modelo.agregarCompra(c);
+                CompraProducto c = new CompraProducto(puesto,mayorista,producto,Integer.parseInt(txtPrecio.getText()),Integer.parseInt(txtCantidad.getText()));
+                modelo.agregarCompra(c);
+                JOptionPane.showMessageDialog(this, c.getPuesto());
             }
         }
         txtPrecio.setText("");
         txtCantidad.setText("");
-        limpiarListaProd();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
@@ -292,15 +291,9 @@ public class VentanaCompra extends javax.swing.JFrame implements Observer {
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 
-//    private void update(Object object, Object object0) {
-//        listaPuesto.setListData(modelo.getListaPuesto().toArray());
-//        listaMayorista.setListData(modelo.getListaMayorista().toArray());
-//    }
-
     @Override
     public void update(Observable o, Object arg) {
         listaPuesto.setListData(modelo.getListaPuesto().toArray());
         listaMayorista.setListData(modelo.getListaMayorista().toArray());
-        listaProd.setListData(modelo.getListaProducto().toArray());
     }
 }

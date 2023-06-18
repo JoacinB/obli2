@@ -94,6 +94,8 @@ public class Sistema extends Observable {
     
     public void agregarPuestos(Puesto p){
         this.listaPuestos.add(p);
+        setChanged();
+        notifyObservers();
     }
     
     public void agregarMayorista(Mayorista m){
@@ -132,25 +134,16 @@ public class Sistema extends Observable {
         Iterator<Producto> it = this.getListaProducto().iterator();
         while(it.hasNext()){
             Producto p = it.next();
-            if(m.equals(p)){
-                listaP.add(p);
+            ArrayList<Producto> mp = m.getProducto();
+            for(int i = 0; i< mp.size();i++){
+                if(mp.get(i).equals(p)){
+                    listaP.add(p);
+                }
             }
         }
         return listaP;
     }
     
-    //Lista de productos que se compraron
-//    public ArrayList<String> productoComprados(CompraProducto p){
-//        ArrayList<String> listap = new ArrayList<String>();
-//        Iterator<Producto> it = this.getListaProducto().iterator();
-//        while(it.hasNext()){
-//            Producto prod = it.next();
-//            if(p.getProducto().equals(prod.getNombre())){
-//                listap.add(prod.getNombre());
-//            }
-//        }
-//        return listap;
-//    }
     
     //Productos comprados por el puesto
     public ArrayList<Producto> productoPuesto(Puesto p){
