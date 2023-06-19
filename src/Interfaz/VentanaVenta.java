@@ -2,82 +2,174 @@
 package Interfaz;
 
 import Dominio.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 public class VentanaVenta extends javax.swing.JFrame {
-
-    
+ 
+    JButton [][] Botones = new JButton[11][2];
+    public int fila = 0;
+    public int col = 0;
+    public Producto prod;
+    public Puesto puestoSelec;
+    DefaultComboBoxModel mod = new DefaultComboBoxModel();
 
     public VentanaVenta(Sistema sistema) {
         initComponents();
         modelo = sistema;
         cargarCombo();
+        panelBotones.setVisible(true);
+        panelBotones.setPreferredSize(new Dimension(453, 671));
         botones();
     }
     
     public void cargarCombo(){
         for(Puesto obj : modelo.getListaPuesto()){
             ComboPuesto.addItem(obj);
+            mod.addElement(obj);
         }
+        ComboPuesto.setModel(mod);
     }
     
     
     public void botones(){
-        JButton [][] matBotones = new JButton[12][3];
-        PanelBotones.setLayout(new GridLayout(11,2));
-        
-        Puesto puestoSelec = (Puesto)ComboPuesto.getSelectedItem();
-        
+        panelBotones.setLayout(new GridLayout(11,2));
+        puestoSelec = (Puesto) ComboPuesto.getSelectedItem();
+         
+        int pos = 0;
         for(int i = 0;i<11;i++){
-           Image imagenProducto = prod().getImage();
             for(int j=0 ;j<2;j++){
                 JButton nuevo = new JButton("");
+                
+                if(pos != modelo.productoPuesto(puestoSelec).size()){
+                    //Si hay stock de este producto entonces agregalo al boton
+                   prod = modelo.productoPuesto(puestoSelec).get(pos);
+                    Image imagenProducto = prod.getImage();
+                    Image scaledImage = imagenProducto.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(scaledImage);
+                    //Se agrega la imagen al boton
+                    nuevo.setIcon(imageIcon);
+                    Botones[i][j] = nuevo;
+                    Botones[i][j].setSize(90, 60);
+                    Botones[i][j].addActionListener(new ProcesoProducto());
+                    panelBotones.add(nuevo);
+                    Botones[i][j].addMouseListener(new ProcesoProducto());
 
-                //Si hay s= prod().getImage();tock de este producto entonces agregalo al boton
-                imagenProducto = prod().getImage();
-                Image scaledImage = imagenProducto.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-                ImageIcon imageIcon = new ImageIcon(scaledImage);
-                //Se agrega la imagen al boton
-                nuevo.setIcon(imageIcon);
-                matBotones[i][j] = nuevo;
-                PanelBotones.add(nuevo);
+                    pos++;
+                }
+                else{
+                    Botones[i][j] = nuevo;
+                    Botones[i][j].setSize(90, 60);
+                    panelBotones.add(nuevo);
+                }
+                
+                Botones[i][j] = nuevo;
+                Botones[i][j].setSize(90, 60);
+                panelBotones.add(nuevo);
+            }
+                                
+        }
+        
+        panelBotones.setVisible(true);
+    }
+    
+    
+    private class ProcesoProducto implements ActionListener,MouseListener{
+        @Override
+        public void actionPerformed(ActionEvent e){
+            //obtengo boton seleccionado
+            JButton cual = ((JButton)e.getSource());
+            Icon im = cual.getIcon();
+            for(int i = 0; i<11;i++){
+                for(int j = 0;j<2;j++){
+                    if(cual == Botones[i][j]){
+                        fila = i;
+                        col = j;
+                    }
+                }
+            }
+            //imagen de la posicion del producto
+            Icon imagen = Botones[fila][col].getIcon();
+            JOptionPane.showMessageDialog(null, imagen);
+             
+            int cantidad = pedirNum("Ingrese cantidad a comprar: ");
+            int precio = pedirNum("Ingrese precio unitario: ");
 
-                PanelBotones.setSize(453, 271);
-
-                //nuevo.addActionListener(new ProcesoProducto());
-                JScrollPane sp = new JScrollPane(PanelBotones,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        //        sp.add(PanelBotones);
-                sp.setVisible(true);
+            if(modelo.hayStock(imagen, cantidad)){
+                VentaProducto vp = new VentaProducto(puestoSelec,prod,cantidad,precio);
+                JOptionPane.showMessageDialog(null, vp);
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"No hay venta parcial","Error",JOptionPane.ERROR_MESSAGE);
             }
         }
-        
-    }
-    
-    public Producto prod(){
-        Producto pro = null;
-        Puesto puestoSelec = (Puesto)ComboPuesto.getSelectedItem();
-        for(Producto p : modelo.productoPuesto(puestoSelec)){
-            pro = p;
-        }
-        return pro;
-    }
-    
-    private class ProcesoProducto implements ActionListener {
+
         @Override
-        public void actionPerformed(ActionEvent e) {
-            //este codigo se ejecuta al presionar el botón,obtengo cuál botón
-            JButton cual = ((JButton)e.getSource());
+        public void mouseClicked(MouseEvent e) {
         }
         
+        
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+           
+        }
+        
+        
+        //Mostrar nombre del producto
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            int pos = 0;
+            for(int i = 0; i<11;i++){
+                for(int j = 0;j<2;j++){
+                     if(pos != modelo.productoPuesto(puestoSelec).size()){
+                        prod = modelo.productoPuesto(puestoSelec).get(pos);
+                        Botones[i][j].setToolTipText(prod.getNombre());
+                        pos++;
+                     }
+                }
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            
+        }
+    }
+    
+    public int pedirNum(String mensaje){
+        int dato = 0;
+        boolean seguir = false;
+        while(!seguir){
+            try{
+                dato = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
+                if(Character.isLetter(dato)) {
+                    JOptionPane.showMessageDialog(this,"Ingrese solo números","Error",JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    seguir = true;
+                }
+            }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this,"Ingrese solo números","Error",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return dato;
     }
     
     /**
@@ -89,10 +181,23 @@ public class VentanaVenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         ComboPuesto = new javax.swing.JComboBox<>();
         lblPuesto = new javax.swing.JLabel();
-        btnRegistra = new javax.swing.JButton();
-        PanelBotones = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panelBotones = new javax.swing.JPanel();
+        btnElegir = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,25 +209,15 @@ public class VentanaVenta extends javax.swing.JFrame {
 
         lblPuesto.setText("Puestos:");
 
-        btnRegistra.setText("Elegir");
-        btnRegistra.addActionListener(new java.awt.event.ActionListener() {
+        panelBotones.setLayout(null);
+        jScrollPane1.setViewportView(panelBotones);
+
+        btnElegir.setText("Elegir");
+        btnElegir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistraActionPerformed(evt);
+                btnElegirActionPerformed(evt);
             }
         });
-
-        PanelBotones.setMinimumSize(new java.awt.Dimension(453, 271));
-
-        javax.swing.GroupLayout PanelBotonesLayout = new javax.swing.GroupLayout(PanelBotones);
-        PanelBotones.setLayout(PanelBotonesLayout);
-        PanelBotonesLayout.setHorizontalGroup(
-            PanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
-        );
-        PanelBotonesLayout.setVerticalGroup(
-            PanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,38 +232,42 @@ public class VentanaVenta extends javax.swing.JFrame {
                             .addComponent(lblPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(101, Short.MAX_VALUE)
-                        .addComponent(btnRegistra, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)))
-                .addComponent(PanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                        .addContainerGap(182, Short.MAX_VALUE)
+                        .addComponent(btnElegir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(102, 102, 102))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addComponent(lblPuesto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ComboPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRegistra)
-                .addGap(90, 90, 90))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
-                .addComponent(PanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(52, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPuesto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ComboPuesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnElegir)
+                        .addGap(105, 105, 105))))
         );
 
-        setBounds(0, 0, 731, 344);
+        setBounds(0, 0, 893, 376);
     }// </editor-fold>//GEN-END:initComponents
 
     private void ComboPuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboPuestoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_ComboPuestoActionPerformed
 
-    private void btnRegistraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistraActionPerformed
-
-    }//GEN-LAST:event_btnRegistraActionPerformed
+    private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
+        puestoSelec = (Puesto) ComboPuesto.getSelectedItem();
+        if(mod.getSelectedItem().equals(puestoSelec)){
+            puestoSelec = (Puesto) mod.getSelectedItem();
+        }
+    }//GEN-LAST:event_btnElegirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,8 +307,10 @@ public class VentanaVenta extends javax.swing.JFrame {
     public Sistema modelo;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Puesto> ComboPuesto;
-    private javax.swing.JPanel PanelBotones;
-    private javax.swing.JButton btnRegistra;
+    private javax.swing.JButton btnElegir;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblPuesto;
+    private javax.swing.JPanel panelBotones;
     // End of variables declaration//GEN-END:variables
 }
