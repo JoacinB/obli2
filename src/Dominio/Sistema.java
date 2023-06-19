@@ -1,10 +1,12 @@
 
 package Dominio;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Observable;
+import javax.swing.Icon;
 
 public class Sistema extends Observable {
      private ArrayList<Producto> listaProducto;
@@ -194,9 +196,22 @@ public class Sistema extends Observable {
         return cantidadTotal;
     }
 
-
-
-
+    //Stock producto seleccionado
+    public boolean hayStock(Icon i,int cant){
+        boolean hay = false;
+        Iterator<CompraProducto> it = this.getListaCompra().iterator();
+        while(it.hasNext()){
+            CompraProducto p = it.next();
+            Producto prod = p.getProducto();
+            if(prod.getImage().equals(i)){
+                if(p.getCant() >= cant){
+                    hay = true;
+                }
+            }
+        }
+        return hay;
+    }
+    
 }
 
 

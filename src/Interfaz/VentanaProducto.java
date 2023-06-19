@@ -15,8 +15,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class VentanaProducto extends javax.swing.JFrame {
     
     String archivo = "";
-    public static final int CANCEL_OPTION = 1;
-    public static final int  APPROVE_OPTION = 0; 
+//    public static final int CANCEL_OPTION = 1;
+//    public static final int  APPROVE_OPTION = 0; 
 
     public VentanaProducto(Sistema sistema) {
          cambiarEsp();
@@ -27,9 +27,6 @@ public class VentanaProducto extends javax.swing.JFrame {
         String currentDir = System.getProperty("user.dir");
         String defaultFolder = currentDir + "/ImagenesOblig";
         FileChooser.setCurrentDirectory(new File(defaultFolder));
-        
-//        File defaultFolder = new File("C:\\OBLI2\\ImagenesOblig");
-//        FileChooser.setCurrentDirectory(defaultFolder);
         
         //Archivos solo de tipo jpg y png
         FileNameExtensionFilter filtrado = new FileNameExtensionFilter("jpg, png","jpg","png");
@@ -148,7 +145,7 @@ public class VentanaProducto extends javax.swing.JFrame {
     
     private void FileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileChooserActionPerformed
         
-        if(JFileChooser.APPROVE_OPTION == 0){
+        if(evt.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)){
             //Se selecciona un archivo
             archivo = FileChooser.getSelectedFile().getPath();
             Image imag = new ImageIcon(archivo).getImage();
@@ -158,13 +155,19 @@ public class VentanaProducto extends javax.swing.JFrame {
             lblImagen.setIcon(imagen);
         }
         
-        else{
-            if(JFileChooser.CANCEL_OPTION == 1){
-                //Se cancela un archivo
-                lblImagen.setIcon(null);
-                lblImagen.setText("Sin imagen");
-            }
+        
+        if(evt.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)){
+            //Se cancela un archivo
+            String currentDir = System.getProperty("user.dir");
+            String defaultFolder = currentDir + "/ImagenesOblig";
+            String sin = currentDir + defaultFolder + "/SinImagen";
+            Image imag = new ImageIcon(sin).getImage();
+            ImageIcon imagen;
+            imagen = new ImageIcon(imag.getScaledInstance(lblImagen.getWidth(),lblImagen.getHeight(),Image.SCALE_SMOOTH));
+            lblImagen.setIcon(imagen);
+
         }
+        
         
     }//GEN-LAST:event_FileChooserActionPerformed
 
