@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import Interfaz.VentanaProducto;
 
 public class VentanaConsultaProducto extends javax.swing.JFrame {
 
@@ -54,6 +53,12 @@ public class VentanaConsultaProducto extends javax.swing.JFrame {
             Image scaledImage = imagenProducto.getScaledInstance(jLabelImagen.getWidth(), jLabelImagen.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(scaledImage);
             jLabelImagen.setIcon(imageIcon);
+//            double minPrecio = sistema.obtenerPrecioMinimoVendido();
+//            jLabelPrecioMinVendido.setText("Precio mínimo vendido: " + String.format("%.2f", minPrecio));
+            int totalComprado = sistema.calcularTotalCompradoPorProducto(producto);
+            jLabelTotalComprado.setText("Total $ comprado entre todos los puestos: " + totalComprado);
+            int cantidadTotal = sistema.calcularCantidadTotalCompradaPorProducto(producto);
+            jLabelCantTotalC.setText("Cantidad total comprada entre todos los puestos (unidad/kilo): " + cantidadTotal + " - " + producto.getFormaVenta());
         } else {
             System.out.println("Producto no encontrado");
         }
@@ -101,15 +106,15 @@ public class VentanaConsultaProducto extends javax.swing.JFrame {
 
         jLabelDescripcion.setText("Descripción:");
         getContentPane().add(jLabelDescripcion);
-        jLabelDescripcion.setBounds(120, 140, 70, 16);
+        jLabelDescripcion.setBounds(120, 140, 90, 16);
 
         jLabelTipo.setText("Tipo:");
         getContentPane().add(jLabelTipo);
-        jLabelTipo.setBounds(120, 190, 30, 16);
+        jLabelTipo.setBounds(120, 190, 50, 16);
 
         jLabelVentaPor.setText("Venta por:");
         getContentPane().add(jLabelVentaPor);
-        jLabelVentaPor.setBounds(120, 240, 60, 16);
+        jLabelVentaPor.setBounds(120, 240, 80, 16);
 
         jButtonP_Mayor.setText(">");
         jButtonP_Mayor.addActionListener(new java.awt.event.ActionListener() {
@@ -171,11 +176,11 @@ public class VentanaConsultaProducto extends javax.swing.JFrame {
 
         jLabelCantTotalV.setText("Cantidad total vendida entre todos los puestos (unidad/kilo):");
         getContentPane().add(jLabelCantTotalV);
-        jLabelCantTotalV.setBounds(650, 160, 430, 16);
+        jLabelCantTotalV.setBounds(650, 160, 530, 16);
 
         jLabelCantTotalC.setText("Cantidad total comprada entre todos los puestos (unidad/kilo):");
         getContentPane().add(jLabelCantTotalC);
-        jLabelCantTotalC.setBounds(650, 190, 430, 16);
+        jLabelCantTotalC.setBounds(650, 190, 530, 16);
 
         jLabelPrecioMinVendido.setText("Precio mínimo vendido:");
         getContentPane().add(jLabelPrecioMinVendido);
@@ -208,7 +213,7 @@ public class VentanaConsultaProducto extends javax.swing.JFrame {
 
         jLabelNombre.setText("Nombre:");
         getContentPane().add(jLabelNombre);
-        jLabelNombre.setBounds(120, 90, 50, 16);
+        jLabelNombre.setBounds(120, 90, 70, 16);
 
         setBounds(0, 0, 1231, 448);
     }// </editor-fold>//GEN-END:initComponents
