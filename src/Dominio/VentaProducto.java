@@ -54,4 +54,9 @@ public class VentaProducto {
     public void setPrecio(int p){
         this.precio = p;
     }
+    
+    @Override
+    public String toString(){
+        return this.getPuesto() + "-" + this.getProd() + "-" + this.getCantcom() + "-" + this.getPrecio();
+    }
 }
