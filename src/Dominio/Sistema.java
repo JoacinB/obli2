@@ -162,6 +162,40 @@ public class Sistema extends Observable {
         return listaProd;
     }
     
+    //Obtener el precio minimo para un producto dado.
+    public double obtenerPrecioMinimoVendido() {
+        double minPrecio = Double.MAX_VALUE;
+        for (VentaProducto venta : listaVenta) {
+            double precio = venta.getPrecio();
+            if (precio < minPrecio) {
+                minPrecio = precio;
+            }
+        }
+        return minPrecio == Double.MAX_VALUE ? 0 : minPrecio;
+    }
+    
+    //Calcular total $ comprado entre todos los puestos para un producto dado.
+    public int calcularTotalCompradoPorProducto(Producto producto) {
+        int totalComprado = 0;
+        for (CompraProducto compra : listaCompra) {
+            if (compra.getProducto().equals(producto)) {
+                totalComprado += compra.getPrecio() * compra.getCant();
+            }
+        }
+        return totalComprado;
+    }
+    
+    // Cantidad total comprada entre todos los puestos (unidad/kilo) para un producto dado.
+    public int calcularCantidadTotalCompradaPorProducto(Producto producto) {
+        int cantidadTotal = 0;
+        for (CompraProducto compra : listaCompra) {
+            if (compra.getProducto().equals(producto)) {
+                cantidadTotal += compra.getCant();
+            }
+        }
+        return cantidadTotal;
+    }
+
     //Stock producto seleccionado
     public boolean hayStock(Icon i,int cant){
         boolean hay = false;

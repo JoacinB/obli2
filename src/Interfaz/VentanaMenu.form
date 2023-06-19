@@ -94,6 +94,25 @@
                 <Property name="mnemonic" type="int" value="97"/>
                 <Property name="label" type="java.lang.String" value="Due&#xf1;os"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemConDuenosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itemConPuestos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Puestos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemConPuestosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itemConMayoristas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mayoristas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemConMayoristasActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
