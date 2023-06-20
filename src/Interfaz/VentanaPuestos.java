@@ -1,4 +1,4 @@
-
+// Autores: Julieta Lopez (295568) y Joaquin Borges (284675)
 package Interfaz;
 
 import Dominio.Puesto;

@@ -1,4 +1,4 @@
-
+// Autores: Julieta Lopez (295568) y Joaquin Borges (284675)
 package Dominio;
 
 import java.awt.Image;
