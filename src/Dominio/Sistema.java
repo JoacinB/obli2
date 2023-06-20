@@ -171,21 +171,58 @@ public class Sistema extends Observable {
     
     //Stock del producto seleccionado
     public boolean hayStock(String im,int cant){
-        boolean hay = false;
-        Iterator<CompraProducto> it = this.getListaCompra().iterator();
-        while(it.hasNext()){
-            CompraProducto p = it.next();
-            if(p != null){
-                Producto prod = p.getProducto();
-                if(prod.getImage().equals(im)){
-                    if(p.getCant() >= cant){
-                        hay = true;
-                    }
-                }
+    //Obtener el precio minimo para un producto dado.
+    public double obtenerPrecioMinimoVendido() {
+        double minPrecio = Double.MAX_VALUE;
+        for (VentaProducto venta : listaVenta) {
+            double precio = venta.getPrecio();
+            if (precio < minPrecio) {
+                minPrecio = precio;
             }
         }
-        return hay;
+        return minPrecio == Double.MAX_VALUE ? 0 : minPrecio;
     }
+    
+    //Calcular total $ comprado entre todos los puestos para un producto dado.
+    public int calcularTotalCompradoPorProducto(Producto producto) {
+        int totalComprado = 0;
+        for (CompraProducto compra : listaCompra) {
+            if (compra.getProducto().equals(producto)) {
+                totalComprado += compra.getPrecio() * compra.getCant();
+            }
+        }
+        return totalComprado;
+    }
+    
+    // Cantidad total comprada entre todos los puestos (unidad/kilo) para un producto dado.
+    public int calcularCantidadTotalCompradaPorProducto(Producto producto) {
+        int cantidadTotal = 0;
+        for (CompraProducto compra : listaCompra) {
+            if (compra.getProducto().equals(producto)) {
+                cantidadTotal += compra.getCant();
+            }
+        }
+        return cantidadTotal;
+    }
+
+//     //Stock producto seleccionado
+//     public boolean hayStock(Icon i,int cant){
+// >>>>>>> master
+//         boolean hay = false;
+//         Iterator<CompraProducto> it = this.getListaCompra().iterator();
+//         while(it.hasNext()){
+//             CompraProducto p = it.next();
+//             if(p != null){
+//                 Producto prod = p.getProducto();
+//                 if(prod.getImage().equals(im)){
+//                     if(p.getCant() >= cant){
+//                         hay = true;
+//                     }
+//                 }
+//             }
+//         }
+//         return hay;
+//     }
     
     //Decrementar cantidad de compra del producto al realizar una venta
     public void decrementar(String im,int cant){

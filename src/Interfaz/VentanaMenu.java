@@ -22,14 +22,11 @@ public class VentanaMenu extends javax.swing.JFrame {
         editMenu = new javax.swing.JMenu();
         ItemCompra = new javax.swing.JMenuItem();
         ItemVenta = new javax.swing.JMenuItem();
-        contentsMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
         menConsultar = new javax.swing.JMenu();
         itemConProductos = new javax.swing.JMenuItem();
         itemConDuenos = new javax.swing.JMenuItem();
+        itemConPuestos = new javax.swing.JMenuItem();
+        itemConMayoristas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,7 +108,28 @@ public class VentanaMenu extends javax.swing.JFrame {
 
         itemConDuenos.setMnemonic('a');
         itemConDuenos.setLabel("Dueños");
+        itemConDuenos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConDuenosActionPerformed(evt);
+            }
+        });
         menConsultar.add(itemConDuenos);
+
+        itemConPuestos.setText("Puestos");
+        itemConPuestos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConPuestosActionPerformed(evt);
+            }
+        });
+        menConsultar.add(itemConPuestos);
+
+        itemConMayoristas.setText("Mayoristas");
+        itemConMayoristas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConMayoristasActionPerformed(evt);
+            }
+        });
+        menConsultar.add(itemConMayoristas);
 
         menuBar.add(menConsultar);
 
@@ -165,6 +183,21 @@ public class VentanaMenu extends javax.swing.JFrame {
         VentanaConsultaProducto ventanaConProd = new VentanaConsultaProducto(modelo);
         ventanaConProd.setVisible(true);
     }//GEN-LAST:event_itemConProductosActionPerformed
+
+    private void itemConDuenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConDuenosActionPerformed
+        VentanaConsultaDueño ventanaConDuenos = new VentanaConsultaDueño(modelo);
+        ventanaConDuenos.setVisible(true);
+    }//GEN-LAST:event_itemConDuenosActionPerformed
+
+    private void itemConMayoristasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConMayoristasActionPerformed
+        VentanaConsultaMayoristas ventanaConMayoristas = new VentanaConsultaMayoristas(modelo);
+        ventanaConMayoristas.setVisible(true);
+    }//GEN-LAST:event_itemConMayoristasActionPerformed
+
+    private void itemConPuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConPuestosActionPerformed
+        VentanaConsultaPuestos ventanaConPuestos = new VentanaConsultaPuestos(modelo);
+        ventanaConPuestos.setVisible(true);
+    }//GEN-LAST:event_itemConPuestosActionPerformed
     
     
 
@@ -205,14 +238,11 @@ public class VentanaMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ItemCompra;
     private javax.swing.JMenuItem ItemVenta;
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem contentsMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem itemConDuenos;
+    private javax.swing.JMenuItem itemConMayoristas;
     private javax.swing.JMenuItem itemConProductos;
+    private javax.swing.JMenuItem itemConPuestos;
     private javax.swing.JMenuItem itemDueñoPuesto;
     private javax.swing.JMenuItem itemMayorista;
     private javax.swing.JMenuItem itemProducto;
