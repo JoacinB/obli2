@@ -16,6 +16,9 @@ public class VentaProducto {
     }
     
     public VentaProducto(Puesto p, Producto prod, int cant, int precio){
+        if (precio < 0 || cantCompra < 0) {
+            throw new IllegalArgumentException("Precio y cantidad no pueden ser negativos");
+        }
         this.setPuesto(p);
         this.setProducto(prod);
         this.setCant(cant);
