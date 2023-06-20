@@ -78,7 +78,7 @@ public class VentanaPuestos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            if(modelo.existeNombre(txtID.getText())){
+            if(modelo.existeId(txtID.getText())){
                 JOptionPane.showMessageDialog(this,"Identificaión repetida","Error",JOptionPane.ERROR_MESSAGE);
             }
             else{

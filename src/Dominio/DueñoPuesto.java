@@ -54,4 +54,10 @@ public class DueñoPuesto {
     public String toString(){
         return "Nombre " + this.getNombre();
     }
+
+    //Nombre distinto
+    
+    public int compareTo(DueñoPuesto o) {
+        return this.nombre.compareToIgnoreCase(o.getNombre());
+    }
 }

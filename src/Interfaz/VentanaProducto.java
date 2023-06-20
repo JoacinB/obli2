@@ -157,11 +157,11 @@ public class VentanaProducto extends javax.swing.JFrame {
         if(evt.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)){
             //Se cancela un archivo
             String currentDir = System.getProperty("user.dir");
-            String defaultFolder = currentDir + "/ImagenesOblig";
-            String sin = currentDir + defaultFolder + "/SinImagen";
-            Image imag = new ImageIcon(sin).getImage();
+            String defaultFolder = currentDir + "/ImagenesOblig/SinImagen.jpg";
+            Image imag = new ImageIcon(defaultFolder).getImage();
             ImageIcon imagen;
             imagen = new ImageIcon(imag.getScaledInstance(lblImagen.getWidth(),lblImagen.getHeight(),Image.SCALE_SMOOTH));
+            //Mostrar imagen "SinImagen"
             lblImagen.setIcon(imagen);
 
         }

@@ -175,6 +175,9 @@ public class VentanaCompra extends javax.swing.JFrame implements Observer {
             else{
                 CompraProducto c = new CompraProducto(puesto,mayorista,producto,Integer.parseInt(txtPrecio.getText()),Integer.parseInt(txtCantidad.getText()));
                 modelo.agregarCompra(c);
+                JOptionPane.showMessageDialog(this, c);
+                int mov = modelo.incrementarCompra();
+                JOptionPane.showMessageDialog(this, "Cantidad de movimientos: " + mov,"Información", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         txtPrecio.setText("");

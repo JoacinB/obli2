@@ -65,9 +65,17 @@ public class Mayorista{
 
     }
     
+    public boolean equals(Object o){
+        return this.getRut().equalsIgnoreCase(((Mayorista)o).getRut());
+    }
+    
     @Override
     public String toString(){
         return this.getNombre() + "-" + this.getRut() + "-" + this.getDire();
     }
     
+    //Rut único
+    public int compareTo(Mayorista o) {
+        return this.rut.compareToIgnoreCase(o.getRut());
+    }
 }

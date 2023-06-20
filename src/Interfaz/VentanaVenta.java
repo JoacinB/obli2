@@ -9,11 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-public class VentanaVenta extends javax.swing.JFrame {
+public class VentanaVenta extends javax.swing.JFrame implements Observer{
  
     JButton [][] Botones = new JButton[11][2];
     public int fila = 0;
@@ -29,6 +31,7 @@ public class VentanaVenta extends javax.swing.JFrame {
         panelBotones.setVisible(true);
         panelBotones.setPreferredSize(new Dimension(453, 671));
         botones();
+        update(null,null);
     }
     
     public void cargarCombo(){
@@ -60,14 +63,16 @@ public class VentanaVenta extends javax.swing.JFrame {
                 if(pos != modelo.productoPuesto(puestoSelec).size()){
                     //Si hay stock de este producto entonces agregalo al boton
                     prod = modelo.productoPuesto(puestoSelec).get(pos);
-                    
+
                     Image imagenProducto = prod.getImage();
                     Image scaledImage = imagenProducto.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                     ImageIcon imageIcon = new ImageIcon(scaledImage);
                     //Se agrega la imagen al boton
                     nuevo.setIcon(imageIcon);
                     Botones[i][j] = nuevo;
+                    Botones[i][j].setName(prod.getNombre());
                     Botones[i][j].setSize(90, 60);
+                    
                     //evento al seleccionar un boton
                     Botones[i][j].addActionListener(new ProcesoProducto());
                     panelBotones.add(nuevo);
@@ -99,7 +104,11 @@ public class VentanaVenta extends javax.swing.JFrame {
         //panelBotones.setVisible(true);
     }
 
-    
+    @Override
+    public void update(Observable o, Object arg) {
+         
+    }
+
     
     private class ProcesoProducto implements ActionListener{
         @Override
@@ -107,7 +116,10 @@ public class VentanaVenta extends javax.swing.JFrame {
             //obtengo boton seleccionado
             JButton cual = ((JButton)e.getSource());
             //Obtengo que producto fue seleccionado
-            String s = cual.getText();
+            String s = cual.getName();
+            
+            Producto nombreProd = modelo.obtenerNombreProd(s);
+            
             
             //Mensaje de cantidad y precio a ingresar 
             String cantidadIng = JOptionPane.showInputDialog(VentanaVenta.this,"Ingrese cantidad a comprar:  ",JOptionPane.PLAIN_MESSAGE);
@@ -117,35 +129,35 @@ public class VentanaVenta extends javax.swing.JFrame {
             int precio = 0;
             
             //validar ingreso de datos
-            boolean seguir = false;
-            while(!seguir){
-                try{
-                    //Validar ingresar solo número
-                    cantidad = Integer.parseInt(cantidadIng);
-                    precio = Integer.parseInt(precioIng);
-                    if(Character.isLetter(cantidad) && Character.isLetter(precio)) {
-                        JOptionPane.showMessageDialog(VentanaVenta.this,"Ingrese solo números","Error",JOptionPane.ERROR_MESSAGE);
-                    }
-                    else{
-                        //Validar stock del producto
-                         if(!modelo.hayStock(s, cantidad)){
-                            VentaProducto vp = new VentaProducto(puestoSelec,prod,cantidad,precio);
-                            modelo.agregarVenta(vp);
-                            modelo.decrementar(s, cantidad);
-                            JOptionPane.showMessageDialog(null, vp);
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(null, cantidad);
-                            JOptionPane.showMessageDialog(null,"No hay venta parcial","Error",JOptionPane.ERROR_MESSAGE);
-                        }
-                        seguir = true;
-                    }
-                }
-                catch(NumberFormatException ex){
+            try{
+                //Validar ingresar solo número
+                cantidad = Integer.parseInt(cantidadIng);
+                precio = Integer.parseInt(precioIng);
+                if(Character.isLetter(cantidad) && Character.isLetter(precio)) {
                     JOptionPane.showMessageDialog(VentanaVenta.this,"Ingrese solo números","Error",JOptionPane.ERROR_MESSAGE);
                 }
+                else{
+                    if(s != null){
+                    //Validar stock del producto
+                         if(modelo.hayStock(s, cantidad)){
+                             modelo.decrementar(s, cantidad);
+
+                            VentaProducto vp = new VentaProducto(puestoSelec,nombreProd,cantidad,precio);
+                            modelo.agregarVenta(vp);
+                            JOptionPane.showMessageDialog(null, vp);
+                            int mov = modelo.incrementarVenta();
+                            JOptionPane.showMessageDialog(VentanaVenta.this,"Cantidad de movimientos: " + mov,"Información", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null,"No hay venta parcial","Error",JOptionPane.ERROR_MESSAGE);
+                         }
+                    }
+                }
             }
-//            return dato;
+            catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(VentanaVenta.this,"Ingrese solo números","Error",JOptionPane.ERROR_MESSAGE);
+            }
+            //modelo.incrementarVenta();
             
         }
     }

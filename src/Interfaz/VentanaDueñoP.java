@@ -77,7 +77,7 @@ public class VentanaDueñoP extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Campos obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            if(modelo.existeNombre(TextNombre.getText())){
+            if(modelo.existeNombreD(TextNombre.getText())){
               JOptionPane.showMessageDialog(this,"Nombre repetido", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else{

@@ -130,7 +130,7 @@ public class VentanaMayorista extends javax.swing.JFrame implements Observer{
             JOptionPane.showMessageDialog(this,"Campo obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            if(modelo.existeNombre(txtRut.getText())){
+            if(modelo.existeRut(txtRut.getText())){
                 JOptionPane.showMessageDialog(this,"El rut debe ser único","Error", JOptionPane.ERROR_MESSAGE);
             }
             else{   
