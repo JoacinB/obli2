@@ -2,7 +2,6 @@
 package Interfaz;
 
 import Dominio.*;
-import static java.lang.Integer.parseInt;
 import javax.swing.JOptionPane;
 
 
@@ -92,6 +91,8 @@ public class VentanaDueñoP extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void TextEdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextEdadKeyTyped
+        //validar ingreso solo números
+        
         char key = evt.getKeyChar();
         
         if(Character.isLetter(key)){
@@ -102,6 +103,8 @@ public class VentanaDueñoP extends javax.swing.JFrame {
     }//GEN-LAST:event_TextEdadKeyTyped
 
     private void TextExperienciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextExperienciaKeyTyped
+        //validar ingreso solo números
+        
         char key = evt.getKeyChar();
         
         if(Character.isLetter(key)){

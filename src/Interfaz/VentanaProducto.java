@@ -4,8 +4,6 @@ package Interfaz;
 import Dominio.*;
 import java.awt.Image;
 import java.io.File;
-import java.util.Locale;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -15,8 +13,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class VentanaProducto extends javax.swing.JFrame {
     
     String archivo = "";
-//    public static final int CANCEL_OPTION = 1;
-//    public static final int  APPROVE_OPTION = 0; 
+
 
     public VentanaProducto(Sistema sistema) {
          cambiarEsp();
@@ -145,6 +142,7 @@ public class VentanaProducto extends javax.swing.JFrame {
     
     private void FileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileChooserActionPerformed
         
+        //Si se selecciono boton aceptar
         if(evt.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)){
             //Se selecciona un archivo
             archivo = FileChooser.getSelectedFile().getPath();
@@ -155,7 +153,7 @@ public class VentanaProducto extends javax.swing.JFrame {
             lblImagen.setIcon(imagen);
         }
         
-        
+        //Si se selecciono boton cancelar 
         if(evt.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)){
             //Se cancela un archivo
             String currentDir = System.getProperty("user.dir");
@@ -172,7 +170,8 @@ public class VentanaProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_FileChooserActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-
+        //Limpiar espacios
+        
         lblImagen.setIcon(null);
         lblImagen.setText("");
         TextNombre.setText("");

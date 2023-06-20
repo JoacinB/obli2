@@ -7,7 +7,6 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 public class VentanaMayorista extends javax.swing.JFrame implements Observer{

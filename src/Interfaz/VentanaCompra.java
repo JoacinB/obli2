@@ -4,7 +4,6 @@ package Interfaz;
 import Dominio.*;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 public class VentanaCompra extends javax.swing.JFrame implements Observer {
@@ -183,6 +182,8 @@ public class VentanaCompra extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        //Validar ingreso solo de números
+        
         char key = evt.getKeyChar();
         
         if(Character.isLetter(key)){
@@ -193,6 +194,8 @@ public class VentanaCompra extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_txtPrecioKeyTyped
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        //Validar ingreso solo de números
+        
         char key = evt.getKeyChar();
         
         if(Character.isLetter(key)){
@@ -229,13 +232,7 @@ public class VentanaCompra extends javax.swing.JFrame implements Observer {
         listaProd.setListData(modelo.productoDe(m).toArray());
     }
     
-    public DefaultListModel limpiarListaProd(){
-        DefaultListModel nuevo = new DefaultListModel();
-        
-        listaProd.setModel(nuevo);
-        
-        return nuevo;
-    }
+
     
     /**
      * @param args the command line arguments
