@@ -60,7 +60,12 @@ public class Puesto {
     public boolean equals(Object o){
         return this.getId().equalsIgnoreCase(((Puesto)o).getId());
     }
-    
+
+    //ID distinto
+    public int compareTo(Puesto o) {
+        return this.identificacion.compareToIgnoreCase(o.getId());
+    }
+
     @Override
     public String toString(){
         return this.getId() + "-" + this.getDueño() + "-" + this.getUbicacion();

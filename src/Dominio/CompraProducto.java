@@ -8,6 +8,7 @@ public class CompraProducto {
     private Producto producto;
     private int precio;
     private int cantidad;
+    private int movimientoCompra;
     
     //Constructor
     public CompraProducto(){
@@ -64,6 +65,14 @@ public class CompraProducto {
     
     public void setCantidad(int can){
         this.cantidad = can;
+    }
+   
+    public int getMovimientoCompra() {
+        return this.movimientoCompra;
+    }
+
+    public void setMovimiento(int mov) {
+        this.movimientoCompra = mov;
     }
     
     @Override

@@ -7,7 +7,7 @@ public class VentaProducto {
     private Producto producto;
     private int cantCompra;
     private int precio;
-    
+    private int movimientoVenta;
     
     //Constructor
     public VentaProducto(){
@@ -55,8 +55,17 @@ public class VentaProducto {
         this.precio = p;
     }
     
+    public int getMovimientoVenta() {
+        return this.movimientoVenta;
+    }
+
+    public void setMovimiento(int mov) {
+        this.movimientoVenta = mov;
+    }
+    
     @Override
     public String toString(){
         return this.getPuesto() + "-" + this.getProd() + "-" + this.getCantcom() + "-" + this.getPrecio();
     }
+
 }
