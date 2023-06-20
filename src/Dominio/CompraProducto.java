@@ -17,6 +17,9 @@ public class CompraProducto {
     }
     
     public CompraProducto(Puesto unp,Mayorista m,Producto unP,int precio,int cant){
+        if (precio < 0 || cantidad < 0) {
+            throw new IllegalArgumentException("Precio y cantidad no pueden ser negativos");
+        }
         this.setPuesto(unp);
         this.setProducto(unP);
         this.setMayorista(m);

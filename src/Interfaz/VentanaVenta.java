@@ -157,7 +157,6 @@ public class VentanaVenta extends javax.swing.JFrame implements Observer{
             catch(NumberFormatException ex){
                 JOptionPane.showMessageDialog(VentanaVenta.this,"Ingrese solo números","Error",JOptionPane.ERROR_MESSAGE);
             }
-            //modelo.incrementarVenta();
             
         }
     }

@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 import javax.swing.Icon;
 
@@ -177,22 +178,12 @@ public class Sistema extends Observable {
     
     //incrementar la cantidad de compras
     public int incrementarCompra(){
-        int mov = 0;
-        for(CompraProducto p: this.listaCompra){
-            mov = p.getMovimientoCompra() + 1;
-            p.setMovimiento(mov);
-        }
-        return mov;
+        return listaCompra.size();
     }
     
     //incrementar la cantidad de ventas
     public int incrementarVenta(){
-        int mov = 0;
-        for(VentaProducto p: this.listaVenta){
-            mov = p.getMovimientoVenta() + 1;
-            p.setMovimiento(mov);
-        }
-        return mov;
+        return listaVenta.size();
     }
     
     
@@ -272,7 +263,6 @@ public class Sistema extends Observable {
     
     //Stock del producto seleccionado
     public boolean hayStock(String nom,int cant){
-
          boolean hay = false;
          Iterator<CompraProducto> it = this.getListaCompra().iterator();
          while(it.hasNext()){
@@ -287,19 +277,45 @@ public class Sistema extends Observable {
              }
          }
          return hay;
-    
     }
     
     // Obtener el precio minimo para un producto dado.
-    public double obtenerPrecioMinimoVendido() {
+    public double obtenerPrecioMinimoVendido(Producto producto) {
         double minPrecio = Double.MAX_VALUE;
         for (VentaProducto venta : listaVenta) {
-            double precio = venta.getPrecio();
-            if (precio < minPrecio) {
-                minPrecio = precio;
+            if (venta.getProd().equals(producto)) {
+                double precio = venta.getPrecio();
+                if (precio < minPrecio) {
+                    minPrecio = precio;
+                }
             }
         }
         return minPrecio == Double.MAX_VALUE ? 0 : minPrecio;
+    }
+    
+    // Obtener el precio maximo para un producto dado.
+    public double obtenerPrecioMaximoVendido(Producto producto) {
+        double maxPrecio = Double.MIN_VALUE;
+        for (VentaProducto venta : listaVenta) {
+            if (venta.getProd().equals(producto)) {
+                double precio = venta.getPrecio();
+                if (precio > maxPrecio) {
+                    maxPrecio = precio;
+                }
+            }
+        }
+        return maxPrecio == Double.MIN_VALUE ? 0 : maxPrecio;
+    }
+    
+    //Calcular total $ vendido entre todos los puestos para un producto dado.
+    public int calcularTotalVendidoPorProducto(Producto producto) {
+        int totalVendido = 0;
+        for (VentaProducto venta : listaVenta) {
+            if (venta.getProd().equals(producto)) {
+                totalVendido += (int) (venta.getPrecio() * venta.getCantcom());
+            }
+        }
+        return totalVendido;
     }
     
     //Calcular total $ comprado entre todos los puestos para un producto dado.
@@ -311,6 +327,17 @@ public class Sistema extends Observable {
             }
         }
         return totalComprado;
+    }
+    
+    // Cantidad total vendida entre todos los puestos (unidad/kilo) para un producto dado.
+    public int calcularCantidadTotalVendidaPorProducto(Producto producto) {
+        int cantidadTotal = 0;
+        for (VentaProducto venta : listaVenta) {
+            if (venta.getProd().equals(producto)) {
+                cantidadTotal += venta.getCantcom();
+            }
+        }
+        return cantidadTotal;
     }
     
     // Cantidad total comprada entre todos los puestos (unidad/kilo) para un producto dado.
@@ -326,7 +353,22 @@ public class Sistema extends Observable {
 
     //Decrementar la cantidad de stock del producto al realizar una venta
     public void decrementar(String im,int cant){
-        Iterator<CompraProducto> it = this.getListaCompra().iterator();
+        List<CompraProducto> originalList = this.getListaCompra();
+
+        // Crear una copia de la lista original
+        List<CompraProducto> copyList = new ArrayList<>();
+        for (CompraProducto cp : originalList) {
+            CompraProducto copy = new CompraProducto();
+            copy.setPuesto(cp.getPuesto());
+            copy.setMayorista(cp.getMayorista());
+            copy.setProducto(cp.getProducto());
+            copy.setPrecio(cp.getPrecio());
+            copy.setCantidad(cp.getCant());
+            copyList.add(copy);
+        }
+
+        // Decrementar la lista copiada
+        Iterator<CompraProducto> it = copyList.iterator();
         while(it.hasNext()){
             CompraProducto p = it.next();
             if(p != null){

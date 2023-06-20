@@ -43,28 +43,87 @@ public class VentanaConsultaProducto extends javax.swing.JFrame {
 
         // Si se encuentra el producto, actualizar interfaz.
         if (producto != null) {
+            
+            //nombre, descripcion, tipo, venta por e imagen.
             jTextFieldNombre.setText(producto.getNombre());
             jTextFieldDescripcion.setText(producto.getDescripcion());
-
-            // Set the selected item in the combo boxes to display type and sale unit
             jComboBoxTipo.setSelectedItem(producto.getTipo());
             jComboBoxVentaPor.setSelectedItem(producto.getFormaVenta());
             Image imagenProducto = producto.getImage();
             Image scaledImage = imagenProducto.getScaledInstance(jLabelImagen.getWidth(), jLabelImagen.getHeight(), Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(scaledImage);
             jLabelImagen.setIcon(imageIcon);
-//            double minPrecio = sistema.obtenerPrecioMinimoVendido();
-//            jLabelPrecioMinVendido.setText("Precio mínimo vendido: " + String.format("%.2f", minPrecio));
+            
+            //total $ v/c entre todos los puestos
+            int totalVendido = sistema.calcularTotalVendidoPorProducto(producto);
+            jLabelTotalVendido.setText("Total $ vendido entre todos los puestos: " + totalVendido);
             int totalComprado = sistema.calcularTotalCompradoPorProducto(producto);
             jLabelTotalComprado.setText("Total $ comprado entre todos los puestos: " + totalComprado);
+            
+            //precios maximos y minimos
+            double minPrecio = sistema.obtenerPrecioMinimoVendido(producto);
+            jLabelPrecioMinVendido.setText("Precio mínimo vendido: " + String.format("%.2f", minPrecio));
+            double maxPrecio = sistema.obtenerPrecioMaximoVendido(producto);
+            jLabelPrecioMaxVendido.setText("Precio máximo vendido: " + String.format("%.2f", maxPrecio));
+            
+            //Cantidad total v/c entre todos los puestos
+            int cantidadTotalV = sistema.calcularCantidadTotalVendidaPorProducto(producto);
+            jLabelCantTotalV.setText("Cantidad total vendida entre todos los puestos (unidad/kilo): " + cantidadTotalV + " - " + producto.getFormaVenta());
             int cantidadTotal = sistema.calcularCantidadTotalCompradaPorProducto(producto);
             jLabelCantTotalC.setText("Cantidad total comprada entre todos los puestos (unidad/kilo): " + cantidadTotal + " - " + producto.getFormaVenta());
+            
+            //Puestos con el precio de venta min/max
+            actualizarPuestosConMax_MinPrice(producto);
         } else {
             System.out.println("Producto no encontrado");
         }
     }
     
+    public void actualizarPuestosConMax_MinPrice(Producto producto) {
+        double maxPrice = Double.MIN_VALUE;
+        double minPrice = Double.MAX_VALUE;
 
+        List<Puesto> puestosMaxPrice = new ArrayList<>();
+        List<Puesto> puestosMinPrice = new ArrayList<>();
+
+        // Go through all the sales to find max and min price.
+        for (VentaProducto venta : sistema.getListaVenta()) {
+            if (venta.getProd().equals(producto)) {
+                double precio = venta.getPrecio();
+                Puesto puesto = venta.getPuesto(); // Assuming VentaProducto has a method getPuesto to get the Puesto.
+
+                if (precio > maxPrice) {
+                    maxPrice = precio;
+                    puestosMaxPrice.clear();
+                    puestosMaxPrice.add(puesto);
+                } else if (precio == maxPrice) {
+                    puestosMaxPrice.add(puesto);
+                }
+
+                if (precio < minPrice) {
+                    minPrice = precio;
+                    puestosMinPrice.clear();
+                    puestosMinPrice.add(puesto);
+                } else if (precio == minPrice) {
+                    puestosMinPrice.add(puesto);
+                }
+            }
+        }
+
+        // Update jListMaximo
+        javax.swing.DefaultListModel<String> maxModel = new javax.swing.DefaultListModel<>();
+        for (Puesto p : puestosMaxPrice) {
+            maxModel.addElement(p.toString()); // or p.getName(), depends on how you want to represent Puesto as a String
+        }
+        jListMaximo.setModel(maxModel);
+
+        // Update jListMinimo
+        javax.swing.DefaultListModel<String> minModel = new javax.swing.DefaultListModel<>();
+        for (Puesto p : puestosMinPrice) {
+            minModel.addElement(p.toString()); // or p.getName(), depends on how you want to represent Puesto as a String
+        }
+        jListMinimo.setModel(minModel);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -184,20 +243,20 @@ public class VentanaConsultaProducto extends javax.swing.JFrame {
 
         jLabelPrecioMinVendido.setText("Precio mínimo vendido:");
         getContentPane().add(jLabelPrecioMinVendido);
-        jLabelPrecioMinVendido.setBounds(650, 220, 140, 16);
+        jLabelPrecioMinVendido.setBounds(650, 220, 260, 16);
 
         jLabelPuestosPrecioVenMin.setText("Puestos con el precio de venta mínimo:");
         jLabelPuestosPrecioVenMin.setPreferredSize(new java.awt.Dimension(230, 16));
         getContentPane().add(jLabelPuestosPrecioVenMin);
-        jLabelPuestosPrecioVenMin.setBounds(650, 250, 240, 16);
+        jLabelPuestosPrecioVenMin.setBounds(650, 250, 260, 16);
 
         jLabelPuestosPrecioVenMax.setText("Puestos con el precio de venta máximo:");
         getContentPane().add(jLabelPuestosPrecioVenMax);
-        jLabelPuestosPrecioVenMax.setBounds(910, 250, 290, 16);
+        jLabelPuestosPrecioVenMax.setBounds(910, 250, 300, 16);
 
         jLabelPrecioMaxVendido.setText("Precio máximo vendido:");
         getContentPane().add(jLabelPrecioMaxVendido);
-        jLabelPrecioMaxVendido.setBounds(910, 220, 140, 16);
+        jLabelPrecioMaxVendido.setBounds(910, 220, 290, 16);
 
         jScrollPaneMinimo.setViewportView(jListMinimo);
 
