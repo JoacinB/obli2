@@ -45,21 +45,12 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="ComboPuesto" min="-2" pref="109" max="-2" attributes="0"/>
-                          <Component id="lblPuesto" min="-2" pref="73" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="182" max="32767" attributes="0"/>
-                      <Component id="btnElegir" min="-2" pref="86" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="ComboPuesto" min="-2" pref="109" max="-2" attributes="0"/>
+                  <Component id="lblPuesto" min="-2" pref="73" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace pref="220" max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="415" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
           </Group>
@@ -79,8 +70,6 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="ComboPuesto" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnElegir" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -118,13 +107,5 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnElegir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Elegir"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnElegirActionPerformed"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>

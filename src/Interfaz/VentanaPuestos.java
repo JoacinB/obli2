@@ -93,6 +93,8 @@ public class VentanaPuestos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtCantEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantEKeyTyped
+        //validar ingreso solo de números
+        
         char key = evt.getKeyChar();
         
         if(Character.isLetter(key)){

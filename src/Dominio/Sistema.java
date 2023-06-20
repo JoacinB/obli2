@@ -108,10 +108,13 @@ public class Sistema extends Observable {
     
     public void agregarCompra(CompraProducto cp){
         this.listaCompra.add(cp);
+        setChanged();
+        notifyObservers();
     }
     
     public void agregarVenta(VentaProducto vp){
         this.listaVenta.add(vp);
+
     }
     
     //nombre único
@@ -130,16 +133,18 @@ public class Sistema extends Observable {
         return vacio;
     }
     
-    //Productos de mayorista
+    //lista de los productos de mayorista
     public ArrayList<Producto> productoDe(Mayorista m){
         ArrayList<Producto> listaP = new ArrayList<Producto>();
         Iterator<Producto> it = this.getListaProducto().iterator();
         while(it.hasNext()){
             Producto p = it.next();
-            ArrayList<Producto> mp = m.getProducto();
-            for(int i = 0; i< mp.size();i++){
-                if(mp.get(i).equals(p)){
-                    listaP.add(p);
+            if(m != null){
+                ArrayList<Producto> mp = m.getProducto();
+                for(int i = 0; i< mp.size();i++){
+                    if(mp.get(i).equals(p)){
+                        listaP.add(p);
+                    }
                 }
             }
         }
@@ -147,35 +152,55 @@ public class Sistema extends Observable {
     }
     
     
-    //Productos comprados por el puesto
+    //lista de los productos comprados por el puesto
     public ArrayList<Producto> productoPuesto(Puesto p){
         ArrayList<Producto> listaProd = new ArrayList<Producto>();
         Iterator<CompraProducto> it = this.getListaCompra().iterator();
         while(it.hasNext()){
             CompraProducto prod = it.next();
-            if(prod.getPuesto().equals(p)){
-                if(prod.getCant() >= 1){
-                    listaProd.add(prod.getProducto());
+            if(prod != null){
+                if(prod.getPuesto().equals(p)){
+                    if(prod.getCant() >= 1){
+                        listaProd.add(prod.getProducto());
+                    }
                 }
             }
         }
         return listaProd;
     }
     
-    //Stock producto seleccionado
-    public boolean hayStock(Icon i,int cant){
+    //Stock del producto seleccionado
+    public boolean hayStock(String im,int cant){
         boolean hay = false;
         Iterator<CompraProducto> it = this.getListaCompra().iterator();
         while(it.hasNext()){
             CompraProducto p = it.next();
-            Producto prod = p.getProducto();
-            if(prod.getImage().equals(i)){
-                if(p.getCant() >= cant){
-                    hay = true;
+            if(p != null){
+                Producto prod = p.getProducto();
+                if(prod.getImage().equals(im)){
+                    if(p.getCant() >= cant){
+                        hay = true;
+                    }
                 }
             }
         }
         return hay;
+    }
+    
+    //Decrementar cantidad de compra del producto al realizar una venta
+    public void decrementar(String im,int cant){
+        Iterator<CompraProducto> it = this.getListaCompra().iterator();
+        while(it.hasNext()){
+            CompraProducto p = it.next();
+            if(p != null){
+                Producto prod = p.getProducto();
+                if(prod.getImage().equals(im)){
+                    if(p.getCant() != 0){
+                        p.setCantidad(p.getCant()-cant);
+                    }
+                }
+            }
+        }
     }
     
 }
