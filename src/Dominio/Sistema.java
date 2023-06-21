@@ -15,8 +15,7 @@ public class Sistema extends Observable {
      private ArrayList<Mayorista> listaMayorista;
      private ArrayList<CompraProducto> listaCompra;
      private ArrayList<VentaProducto> listaVenta;
-     private int MovimientoCompra;
-     private int MovimientoVenta;
+
      
      //Constructor
      public Sistema(){
@@ -190,7 +189,7 @@ public class Sistema extends Observable {
         int mov = 0;
         for(VentaProducto p: this.listaVenta){
             mov = p.getMovimientoVenta() + 1;
-            p.setMovimiento(mov);
+            p.setMovimientoV(mov);
         }
         return mov;
     }

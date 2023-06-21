@@ -1,6 +1,15 @@
 
 package Interfaz;
 import Dominio.*;
+import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class VentanaMenu extends javax.swing.JFrame {
 
@@ -199,6 +208,139 @@ public class VentanaMenu extends javax.swing.JFrame {
         ventanaConPuestos.setVisible(true);
     }//GEN-LAST:event_itemConPuestosActionPerformed
     
+    private void formWindowOpened(java.awt.event.WindowEvent evt){
+        String [] opciones = {"Tomar datos guardados anteriormente","Partir de un sistema vacio","Partir de un sistema vacio pero pregarcar los datos de un archivo Productos"};
+
+        int opcion = JOptionPane.showOptionDialog(VentanaMenu.this, "¿Cómo desea ingresar los datos?", "Ingreso de Datos",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+        
+        if(opcion == 0){
+            datosPrecargados();
+        }
+        else{
+            if(opcion == 1){
+                
+            }
+            else{
+                if(opcion == 2){
+                    cargarProductos();
+                }
+            }
+        }
+    }
+    
+    public void datosPrecargados(){
+        cargarProductos();
+        cargarDueñoP();
+        cargarPuesto();
+        //cargarMayorista();
+    }
+    
+    public  ArrayList<Producto> cargarProductos() {
+        ArrayList<Producto> productos = new ArrayList<>();
+        String currentDir = System.getProperty("user.dir");
+        String defaultFolder = currentDir + "/Productos.txt";
+        try (BufferedReader br = new BufferedReader(new FileReader(defaultFolder))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datosProducto = linea.split("@");
+                String nombre = datosProducto[0];
+                String descripcion = datosProducto[1];
+                String tipo = datosProducto[2];
+                String formaVenta = datosProducto[3];
+                Image archivoImagen = new ImageIcon(datosProducto[4]).getImage();
+
+                Producto producto = new Producto(nombre, descripcion, tipo, formaVenta);
+                productos.add(producto);
+            }
+        } catch (IOException e) {
+            System.out.println("Error de archivo");
+        }
+        return productos;
+    }
+    
+    public  ArrayList<DueñoPuesto> cargarDueñoP() {
+        ArrayList<DueñoPuesto> dpuesto = new ArrayList<>();
+        String currentDir = System.getProperty("user.dir");
+        String defaultFolder = currentDir + "/DueñoPuesto.txt";
+        try (BufferedReader br = new BufferedReader(new FileReader(defaultFolder))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datosDueño = linea.split("@");
+                String nombre = datosDueño[0];
+                int edad = Integer.parseInt(datosDueño[1]);
+                int experiencia = Integer.parseInt(datosDueño[2]);
+
+                DueñoPuesto dp = new DueñoPuesto(nombre,edad,experiencia);
+                dpuesto.add(dp);
+            }
+        } catch (IOException e) {
+            System.out.println("Error de archivo");
+        }
+        return dpuesto;
+    }
+    
+    public  ArrayList<Puesto> cargarPuesto() {
+        ArrayList<Puesto> p = new ArrayList<>();
+        String currentDir = System.getProperty("user.dir");
+        String defaultFolder = currentDir + "/Puesto.txt";
+        try (BufferedReader br = new BufferedReader(new FileReader(defaultFolder))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datosPuesto = linea.split("@");
+                String identificacion = datosPuesto[0];
+                String dueño = datosPuesto[1];
+                String ubicacion = datosPuesto[2];
+                int cantidadEmpleados = Integer.parseInt(datosPuesto[3]);
+                
+
+                Puesto puesto = new Puesto(identificacion,dueño,ubicacion,cantidadEmpleados);
+                p.add(puesto);
+            }
+        } catch (IOException e) {
+            System.out.println("Error de archivo");
+        }
+        return p;
+    }
+    
+//    public  ArrayList<Mayorista> cargarMayorista() {
+//        ArrayList<Mayorista> m = new ArrayList<>();
+//        ArrayList<Producto> productos;
+//        String currentDir = System.getProperty("user.dir");
+//        String defaultFolder = currentDir + "/Mayorista.txt";
+//        try (BufferedReader br = new BufferedReader(new FileReader(defaultFolder))) {
+//            String linea;
+//            while ((linea = br.readLine()) != null) {
+//                String[] datosMay = linea.split("@");
+//                String rut = datosMay[0];
+//                String nombre = datosMay[1];
+//                String direccion = datosMay[2];
+//                String lista = datosMay[3];
+//
+//                Mayorista may = new Mayorista(rut,nombre,direccion,listas);
+//                m.add(may);
+//            }
+//        } catch (IOException e) {
+//            System.out.println("Error de archivo");
+//        }
+//        return m;
+//    }
+    
+    
+//    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+//        try{
+//            //Serealización. Grabación del archivo
+//            FileOutputStream arch = new FileOutputStream("datos");
+//            
+//            ObjectOutputStream obj = new ObjectOutputStream(arch);
+//            obj.writeObject(modelo);
+//            obj.close();
+//        }
+//        catch(IOException e){
+//            System.out.println("Error de archivo");
+//        }
+//        
+//    }  
     
 
     public static void main(String args[]) {

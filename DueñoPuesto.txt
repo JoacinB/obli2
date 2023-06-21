@@ -1,0 +1,5 @@
+Luis@45@15
+Juan@20@3
+Pedro@62@15
+Oscar@28@6
+Victor@70@30

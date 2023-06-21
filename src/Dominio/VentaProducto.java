@@ -59,7 +59,7 @@ public class VentaProducto {
         return this.movimientoVenta;
     }
 
-    public void setMovimiento(int mov) {
+    public void setMovimientoV(int mov) {
         this.movimientoVenta = mov;
     }
     

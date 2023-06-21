@@ -1,0 +1,9 @@
+Banana@Disponibles-todo-el-año@Fruta@Kilogramo@/ImagenesOblig/Banana.jpg
+Durazno@Disponibles-en-verano@Fruta@Kilogramo@/ImagenesOblig/Durazno.jpg
+Cebolla@Disponible-todo-el-año@Verdura@Kilogramo@/ImagenesOblig/Cebolla.jpg
+CiruelaAmarilla@Disponible-en-verano-o-otoño@Fruta@Kilogramo@/ImagenesOblig/CiruelaAmarilla.jpg
+Uvas@Disponibles-en-verano@Fruta@Kilogramo@/ImagenesOblig/Uvas.jpg
+Boniato@Disponible-todo-el-año@Verdura@Kilogramo@/ImagenesOblig/Boniato.jpg
+Higo@Disponible-en-verano@Fruta@Unidad@/ImagenesOblig/Higo.jpg
+Cereza@Disponible-en-verano@Fruta@Unidad@/ImagenesOblig/Cereza.jpg
+Esparrago@Disponible-en-verano@Verdura@Unidad@/ImagenesOblig/Esparrago.jpg
